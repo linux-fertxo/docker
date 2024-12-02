@@ -1,0 +1,25 @@
+http:
+  middlewares:
+
+    chain-basic-auth:
+      chain:
+        middlewares:
+          - middlewares-rate-limit
+          - middlewares-secure-headers
+          - middlewares-basic-auth
+          - middlewares-crowdsec-bouncer
+
+    chain-authelia:
+      chain:
+        middlewares:
+          - middlewares-rate-limit
+          - middlewares-secure-headers
+          - middlewares-authelia
+
+    chain-nextcloud:
+      chain:
+        middlewares:
+          - middlewares-rate-limit
+          - nextcloud-secure-headers
+          - nextcloud-redirect
+          - middlewares-crowdsec-bouncer
