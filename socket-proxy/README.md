@@ -4,18 +4,18 @@
   </p> 
 </h1>
 
-<h3> 
+<h2> 
   <p align="center" width="100%">
     Un contenedor para añadir una capa de seguridad al Socket de Docker
   </p>
   </br>
-</h3>
+</h2>
 
 [![Static Badge](https://img.shields.io/badge/lang-%F0%9F%87%AC%F0%9F%87%A7_en-blue?style=plastic)](README.en.md)
 
-#### Gracias a la imagen del equipo de [Tecnativa](https://github.com/Tecnativa): [docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy)
+### Gracias a la imagen del equipo de [Tecnativa](https://github.com/Tecnativa): [docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy)
 
-#### Estructura:
+### Estructura:
 
     socket-proxy/
      ├─ docker-compose.yml              → archivo docker
@@ -44,3 +44,13 @@ Se puede usar por ejemplo para retocar los tiempos de espera o cambiar el puerto
 ----
 ```
 
+### Arranque del contenedor
+
+```bash
+docker compose up -d          → arrancamos socket-proxy en segundo plano
+
+docker logs socket-proxy -f   → examinamos los registros para ver si hay algún problema (CTRL+c para salir)
+```
+</br>
+
+¡Listo! Ya tenemos una capa de seguridad extra en nuestro socket de Docker.

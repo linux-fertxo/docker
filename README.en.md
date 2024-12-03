@@ -3,15 +3,18 @@
         <img width="60%" src=".recursos/img/linuxfertxo.png">
         </br>
         My Docker services for Homelab
+        <h2><p align="center">
+            A commented⁽¹⁾ selection of containers that I hope will inspire your projects
+        </h2>
+        <h5>
+            ⁽¹⁾ Note: All comments inside each file are in Spanish at the moment.
+        </h5>
     </p> 
 </h1>
 
 [![Static Badge](https://img.shields.io/badge/lang-%F0%9F%87%AA%F0%9F%87%B8_es-blue?style=plastic)](README.md)
 
-### A commented⁽¹⁾ selection of containers that I hope will inspire your projects
-###### (1) Note: All comments inside each file are in Spanish at the moment.
-
-#### Repository structure:
+### Repository structure:
 
 * Each service has its own `README.md`. Check out each one to better understand how they work.
 * They can be run from CLI or be imported to Portainer, Dockge...
@@ -23,11 +26,28 @@
       5. Crowdsec
       6. Any other container with Traefik labels (Nextcloud, etc)
 
-#### Creators who have served me as inspiration and material in which I've relied
+### To-Do List:
+- [x] _Docker Socket Proxy_
+- [x] _Træfik_
+- [x] _Authelia_
+- [ ] Nextcloud ← **Next**
+- [ ] Crowdsec
+- [ ] Atuin
+- [ ] Cloudflare DDNS
+- [ ] Code Server
+- [ ] Dashy
+- [ ] jDownloader
+- [ ] MariaDB
+- [ ] Minecraft Bedrock Server
+- [ ] OPNSense Dashboard
+- [ ] Proxmox Backup Server
+- [ ] Proxmox Dashboard
+
+### Creators who have served me as inspiration and material in which I've relied
 
 Today almost everything is invented. Each case is unique and you've to adapt all the info on Internet to your needs. I wouldn't have begun if it weren't for the countless gentle experts who we're lucky to have nowadays on Internet.Therefore,
 
-### Infinite thanks to:
+## Infinite thanks to:
 
 * **Timothy Stewart (Techno Tim)**
     * __[Website](https://technotim.live)__

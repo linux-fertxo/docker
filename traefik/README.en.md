@@ -6,16 +6,17 @@
   </p> 
 </h1>
 
-<h4> 
+<h2> 
   <p align="center" width="100%">
 A reverse proxy with SSL certificates to redirect incoming requests to their respective services through HTTPS  </p>
   </br>
-</h4>
+</h2>
 
 [![Static Badge](https://img.shields.io/badge/lang-%F0%9F%87%AA%F0%9F%87%B8_es-blue?style=plastic)](README.md)
 
-##### Based on the image from [Traefik](https://traefik.io): [traefik](https://github.com/traefik/traefik)
+### Based on the image from [Traefik](https://traefik.io): [traefik](https://github.com/traefik/traefik)
 
+- [Based on the image from Traefik: traefik](#based-on-the-image-from-traefik-traefik)
 - [Structure](#structure)
 - [Explanation](#explanation)
 	- [*Wait... What is a Middleware?*](#wait-what-is-a-middleware)
@@ -25,7 +26,7 @@ A reverse proxy with SSL certificates to redirect incoming requests to their res
 	- [*Before starting*](#before-starting)
 - [Container start](#container-start)
 
-#### Structure
+### Structure
 
 	traefik/
 	  ├─ docker-compose.yml                   → dockerfile
@@ -42,7 +43,7 @@ A reverse proxy with SSL certificates to redirect incoming requests to their res
 	       ├─ middlewares-chains.yml          → chained middlewares (see below)
 	       └─ tls-opts.yml                    → TLS options
 
-#### Explanation
+### Explanation
 
 The `docker-compose.yml` and `.env` files need no introduction, they are the files that contain all the instructions and variables to create the Traefik container.
 
@@ -59,15 +60,15 @@ Finally, the `rules/` folder contains Traefik's **_"dynamic"_** configuration. D
 
 Among all the files inside `rules/` there are two that are of special importance: `middlewares` and `middlewares-chains`.
 
-##### *Wait... What is a Middleware?*
+#### *Wait... What is a Middleware?*
 
 Middlewares are pieces of code that are inserted between the request and the service. They are a way of "intercepting" incoming requests and making changes to them, which are usually necessary in order to make them understandable by the service and therefore make it work.
 
-##### *And a chain?*
+#### *And a chain?*
 
 Services often use the same middlewares over and over again. A chain is a way of grouping them under the same name and thus applying them jointly to the service. Then we can specify the chain we want to be applied through Traefik labels.
 
-##### *Other observations*
+#### *Other observations*
 
 As we've seen, using the `rules/` folder allows us to drop files into it and have Traefik read and apply them on the fly. But this is not true for any subfolders we make inside, so it's not recursive. If we like to have everything organized and grouped by folders, it won't work.
 
@@ -75,7 +76,7 @@ The container uses [socket-proxy](../socket-proxy/) for added security, but ther
 
 It uses [Cloudflare](cloudflare.com) as a DNS resolver, but it is possible to use any other.
 
-##### *Environment variables*
+#### *Environment variables*
 
 * `PUID` y `PGID` are the user and group identifiers in numeric format (run `id` to find out)
 * `TZ` is the time zone in `Continent/City` format. [List of zones](https://www.joda.org/joda-time/timezones.html)
@@ -83,7 +84,7 @@ It uses [Cloudflare](cloudflare.com) as a DNS resolver, but it is possible to us
 * `DOMAINNAME` is the name of our domain.
 * `CLOUDFLARE_EMAIL` is the email address with which we registered the domain with Cloudflare.
 
-##### *Before starting*
+#### *Before starting*
 
 Create the folders and files structure indicated above, paying special attention to `acme.json`'s permissions. **If they are not 600 (rw- --- ---) Traefik won't start.**
 
@@ -95,7 +96,7 @@ docker network create proxy
 
 If we want to use the Traefik dashboard from outside our local network, we will have to create a CNAME record in our DNS provider that points to our domain. For example, `docker-compose.yml` shows that the panel will be available at `https://traefik.$DOMAINNAME`.
 
-#### Container start
+### Container start
 
 ```bash
 docker compose up -d     → start Traefik in background

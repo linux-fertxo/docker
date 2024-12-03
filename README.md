@@ -3,14 +3,16 @@
         <img width="50%" src=".recursos/img/linuxfertxo.png">
         </br>
         Mis servicios Docker para Homelab
-    </p> 
+        <h2><p align="center">
+            Una selección comentada de contenedores que espero sirva de inspiración para vuestros proyectos
+        </h2>
+    </p>
+    
 </h1>
 
 [![Static Badge](https://img.shields.io/badge/lang-%F0%9F%87%AC%F0%9F%87%A7_en-blue?style=plastic)](README.en.md)
 
-### Una selección comentada de contenedores que espero sirva de inspiración para vuestros proyectos
-
-#### Estructura del repositorio:
+### Estructura del repositorio:
 
 * Cada servicio tiene dentro su propio `README.md`, con ejemplos y archivos auxiliares así como comentarios donde he pensado que era relevante. Echa un vistazo a cada uno para entender mejor cómo funcionan.
 * Se pueden hacer funcionar tanto desde CLI como importándolos en Portainer, Dockge...
@@ -22,11 +24,28 @@
       4. Crowdsec
       5. El resto de contenedores con etiquetas para Traefik (Nextcloud, etc)
 
-#### Creadores que me han servido de inspiración y material en el que me he apoyado
+### Tareas pendientes:
+- [x] _Docker Socket Proxy_
+- [x] _Træfik_
+- [x] _Authelia_
+- [ ] Nextcloud ← **Siguiente**
+- [ ] Crowdsec
+- [ ] Atuin
+- [ ] Cloudflare DDNS
+- [ ] Code Server
+- [ ] Dashy
+- [ ] jDownloader
+- [ ] MariaDB
+- [ ] Minecraft Bedrock Server
+- [ ] OPNSense Dashboard
+- [ ] Proxmox Backup Server
+- [ ] Proxmox Dashboard
+
+### Creadores que me han servido de inspiración y material en el que me he apoyado
 
 Hoy en día casi todo está inventado. Cada caso es particular y hay que adaptar toda la información que hay en la red a nuestras necesidades. Todo ésto no habría empezado si no fuera por los numerosos expertos que tenemos la suerte de tener hoy en día en la red. Por lo tanto,
 
-### Gracias infinitas a:
+## Gracias infinitas a:
 
 * **Timothy Stewart (Techno Tim)**
     * __[Página web](https://technotim.live)__
