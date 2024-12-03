@@ -146,91 +146,91 @@ Tras revisar en el log que todo va bien, iremos a la dirección que hayamos conf
 </br>
 
   <p align="center" width="100%">
-    <img width="25%" src="../.recursos/img/authelia_screenshot_01.png">
+    <img width="33%" src="../.recursos/img/authelia_screenshot_01.png">
     </br>Introducimos nuestras credenciales
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="25%" src="../.recursos/img/authelia_screenshot_02.png">
+    <img width="33%" src="../.recursos/img/authelia_screenshot_02.png">
     </br>Pinchamos en Registar Dispositivo
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="25%" src="../.recursos/img/authelia_screenshot_03.png">
+    <img width="33%" src="../.recursos/img/authelia_screenshot_03.png">
     </br>Primero registraremos una contraseña de un solo uso
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="25%" src="../.recursos/img/authelia_screenshot_04.png">
+    <img width="33%" src="../.recursos/img/authelia_screenshot_04.png">
     </br>Nos advierte que nos llegará un correo... que no llegará porque no tenemos un servidor de correo configurado. Acudimos al archivo `notification.txt` de la carpeta `config/`
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="25%" src="../.recursos/img/authelia_screenshot_05.png">
+    <img width="33%" src="../.recursos/img/authelia_screenshot_05.png">
     </br>Copiamos el código aleatorio y lo introducimos en el diálogo anterior
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="25%" src="../.recursos/img/authelia_screenshot_06.png">
+    <img width="33%" src="../.recursos/img/authelia_screenshot_06.png">
     </br>Pulsamos en SIGUIENTE
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="25%" src="../.recursos/img/authelia_screenshot_07.png">
+    <img width="33%" src="../.recursos/img/authelia_screenshot_07.png">
     </br>Escaneamos el código QR con nuestra aplicación favorita. En mi caso es <a href="https://play.google.com/store/apps/details?id=com.authy.authy&hl=es&pli=1">Authy para Android</a>
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="25%" src="../.recursos/img/authelia_screenshot_08.png">
+    <img width="33%" src="../.recursos/img/authelia_screenshot_08.png">
     </br>Introducimos el código generado
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="25%" src="../.recursos/img/authelia_screenshot_09.png">
+    <img width="33%" src="../.recursos/img/authelia_screenshot_09.png">
     </br>Ya tenemos configurado un segundo factor, ahora vamos a probar con un dispositivo físico pulsando AÑADIR en Credenciales WebAuthn
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="25%" src="../.recursos/img/authelia_screenshot_10.png">
+    <img width="33%" src="../.recursos/img/authelia_screenshot_10.png">
     </br>En éste caso daremos de alta una Yubikey 5C
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="25%" src="../.recursos/img/authelia_screenshot_11.png">
+    <img width="33%" src="../.recursos/img/authelia_screenshot_11.png">
     </br>Introducimos nuestro PIN
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="25%" src="../.recursos/img/authelia_screenshot_12.png">
+    <img width="33%" src="../.recursos/img/authelia_screenshot_12.png">
     </br>Tocamos el botón físico de la Yubikey
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="25%" src="../.recursos/img/authelia_screenshot_13.png">
+    <img width="33%" src="../.recursos/img/authelia_screenshot_13.png">
     </br>Y por último podremos elegir el método que se nos presentará por defecto. Siempre podremos decir cual en el momento en que nos lo solicite, esto es tan solo una preferencia.
   </p>
 
