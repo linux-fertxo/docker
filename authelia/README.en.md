@@ -146,90 +146,90 @@ docker logs authelia -f   → examine the logs to see if there are any problems 
 After checking the log and be sure that everything is going well, we'll go to the address that we've configured previously in `docker-compose.yml` (the `auth.$DOMAINNAME` line) and proceed with the following steps **(screenshots in Spanish)**:
 
   <p align="center" width="100%">
-    <img width="60%" src="../.recursos/img/authelia_screenshot_01.png">
+    <img width="25%" src="../.recursos/img/authelia_screenshot_01.png">
     </br>Enter your credentials
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="60%" src="../.recursos/img/authelia_screenshot_02.png">
+    <img width="25%" src="../.recursos/img/authelia_screenshot_02.png">
     </br>Click on Register Device
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="60%" src="../.recursos/img/authelia_screenshot_03.png">
+    <img width="25%" src="../.recursos/img/authelia_screenshot_03.png">
     </br>We'll start by setting a One Time Password first
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="60%" src="../.recursos/img/authelia_screenshot_04.png">
+    <img width="25%" src="../.recursos/img/authelia_screenshot_04.png">
     </br>It warns us that we will receive an email... which will never arrive because we don't have configured any email server. We go to the `notification.txt` file in the `config/` folder.
     </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="60%" src="../.recursos/img/authelia_screenshot_05.png">
+    <img width="25%" src="../.recursos/img/authelia_screenshot_05.png">
     </br>Copy the random code and paste it in the previous dialogue
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="60%" src="../.recursos/img/authelia_screenshot_06.png">
+    <img width="25%" src="../.recursos/img/authelia_screenshot_06.png">
     </br>Click on NEXT
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="60%" src="../.recursos/img/authelia_screenshot_07.png">
+    <img width="25%" src="../.recursos/img/authelia_screenshot_07.png">
     </br>Scan the QR code with your favourite app. In my case I chose <a href="https://play.google.com/store/apps/details?id=com.authy.authy&hl=es&pli=1">Authy for Android</a>
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="60%" src="../.recursos/img/authelia_screenshot_08.png">
+    <img width="25%" src="../.recursos/img/authelia_screenshot_08.png">
     </br>Enter the timed generated code
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="60%" src="../.recursos/img/authelia_screenshot_09.png">
+    <img width="25%" src="../.recursos/img/authelia_screenshot_09.png">
     </br>Well we now have a second factor configured! Now let's try with a physical device. Click ADD in WebAuthn Credentials  </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="60%" src="../.recursos/img/authelia_screenshot_10.png">
+    <img width="25%" src="../.recursos/img/authelia_screenshot_10.png">
     </br>In this case we will register a Yubikey 5C
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="60%" src="../.recursos/img/authelia_screenshot_11.png">
+    <img width="25%" src="../.recursos/img/authelia_screenshot_11.png">
     </br>Enter the PIN if you've one configured
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="60%" src="../.recursos/img/authelia_screenshot_12.png">
+    <img width="25%" src="../.recursos/img/authelia_screenshot_12.png">
     </br>Touch the physical button on the Yubikey
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="60%" src="../.recursos/img/authelia_screenshot_13.png">
+    <img width="25%" src="../.recursos/img/authelia_screenshot_13.png">
     </br>And finally, here we can choose the method that will be presented by default. We can always say which one when it's requested, this is just a preference.
   </p>
 
