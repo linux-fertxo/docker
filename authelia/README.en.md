@@ -12,7 +12,7 @@
 
 [![Static Badge](https://img.shields.io/badge/lang-%F0%9F%87%AA%F0%9F%87%B8_es-blue?style=plastic)](README.md)
 
-### Based on the image from [Authelia](https://www.authelia.com): [authelia](https://github.com/authelia/authelia/pkgs/container/authelia)
+## Based on the image from [Authelia](https://www.authelia.com): [authelia](https://github.com/authelia/authelia/pkgs/container/authelia)
 
 - [Based on the image from Authelia: authelia](#based-on-the-image-from-authelia-authelia)
 - [Structure](#structure)
@@ -23,8 +23,9 @@
   - [*Environment variables*](#environment-variables)
   - [*Before start*](#before-start)
 - [First run and device register](#first-run-and-device-register)
+- [Done! We can now access our applications with two-factor authentication.](#done-we-can-now-access-our-applications-with-two-factor-authentication)
 
-### Structure
+## Structure
 
     authelia/
       ├─ docker-compose.yml               → dockerfile
@@ -42,13 +43,13 @@
       │         └─ authelia_session_redis_password
       └─ redis/                           → Redis server data
 
-### Explanation
+## Explanation
 
 Authelia config can be very complex. Here we've chosen for a simple approach that will work for one user or a few of them. For more advanced options we will have to refer to the [official Authelia documentation](https://www.authelia.com/configuration/prologue/introduction/).
 
 The `docker-compose.yml` and `.env` files, as always, need no introduction. They are the files that contain all the instructions and variables to create the Authelia stack.
 
-#### *Authelia config*
+### *Authelia config*
 
 The `configuration.yml` file contains the entire Authelia config. Here are some highlights:
 
@@ -65,14 +66,14 @@ The `secrets` subfolder contains the keys and passwords that will be used in the
 > It’s **strongly recommended** this is a Random Alphanumeric String with 64 or more characters.
 
 We need to generate one for each file, i.e. four in total.
-How do we generate them? We have many options from the Linux shell:
+How do we generate them? We have plenty options from the Linux shell:
 
 ```bash
 # With openssl (available by default in most distributions):
   openssl rand -hex 64
 # With pwgen (needs to be installed):
   pwgen -s 64
-# With Docker and the Authelia container itself (does not need to be running yet):
+# With Docker and the Authelia container itself (doesn't need to be running yet):
   docker run --rm authelia/authelia:latest authelia crypto rand --length 64 --charset alphanumeric
 # Without any type of tool installed:
   date +%s | sha256sum | base64 | head -c 64 ; echo
@@ -80,7 +81,7 @@ How do we generate them? We have many options from the Linux shell:
 
 Or with your favorite online tool: [IT-Tools](https://it-tools.tech/token-generator), [Generate Random](https://generate-random.org/api-token-generator )...
 
-#### *User config*
+### *User config*
 
 The `users:` block of the `users_database.yml` file in turn contains a block for each user we configure:
 
@@ -110,20 +111,20 @@ Replace PASSWORD with your real password and cut from the first `$` symbol till 
 
 > **Tip**: ***if we put a space before the whole command we will be telling the Shell not to store the line in the history.*** 😎
 
-#### *Other remarks*
+### *Other remarks*
 
 Inside the `redis/` folder some files will be generated that we don't really have to do anything with. You can create a docker volume instead of a bind mount.
 
 The service is based on Træfik, although it can be adapted to other reverse proxies.
 
-#### *Environment variables*
+### *Environment variables*
 
 * `PUID` and `PGID` are the user and group IDs in numeric format (run `id` to find them)
 * `TZ` is the time zone in `Continent/City` format. [List of zones](https://www.joda.org/joda-time/timezones.html)
 * `DOCKERDIR` is the parent directory containing all Docker services.
 * `DOMAINNAME` is the name of our domain.
 
-#### *Before start*
+### *Before start*
 
 Create the structure shown above. It's interesting that both the `secrets` folder and the files inside it all have permissions 600 (rw- --- ---).
 
@@ -133,7 +134,7 @@ The `proxy` network must be present before compose is started.
 
 The `traefik` container must be up and running beforehand.
 
-### First run and device register
+## First run and device register
 
 ```bash
 docker compose up -d      → run Authelia in the background
@@ -235,4 +236,4 @@ After checking the log and be sure that everything is going well, we'll go to th
 
 </br>
 
-Done! We can now access our applications with two-factor authentication.
+## Done! We can now access our applications with two-factor authentication.

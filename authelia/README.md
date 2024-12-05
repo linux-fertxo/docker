@@ -12,7 +12,7 @@
 
 [![Static Badge](https://img.shields.io/badge/lang-%F0%9F%87%AC%F0%9F%87%A7_en-blue?style=plastic)](README.en.md)
 
-### Basado en la imagen de [Authelia](https://www.authelia.com): [authelia](https://github.com/authelia/authelia/pkgs/container/authelia)
+## Basado en la imagen de [Authelia](https://www.authelia.com): [authelia](https://github.com/authelia/authelia/pkgs/container/authelia)
 
 - [Basado en la imagen de Authelia: authelia](#basado-en-la-imagen-de-authelia-authelia)
 - [Estructura](#estructura)
@@ -23,8 +23,9 @@
   - [*Variables de entorno*](#variables-de-entorno)
   - [*Antes de empezar*](#antes-de-empezar)
 - [Primer arranque y registro de dispositivos](#primer-arranque-y-registro-de-dispositivos)
+- [¡Listo! Ya podemos acceder a nuestras aplicacines con autenticación de doble factor.](#listo-ya-podemos-acceder-a-nuestras-aplicacines-con-autenticación-de-doble-factor)
 
-### Estructura
+## Estructura
 
     authelia/
       ├─ docker-compose.yml               → archivo docker
@@ -42,13 +43,13 @@
       │         └─ authelia_session_redis_password
       └─ redis/                           → datos del servidor redis
 
-### Explicación
+## Explicación
 
 La configuración de Authelia puede llegar a ser muy complicada. Aquí se ha optado por una forma sencilla que resulta válida para uno o unos pocos usuarios. Para otras opciones más complejas nos tendremos que remitir a la [documentación oficial de Authelia](https://www.authelia.com/configuration/prologue/introduction/).
 
 Los archivos `docker-compose.yml` y `.env` como siempre no necesitan presentación, son los archivos que contienen todas las instrucciones y variables para crear el contenedor de Authelia.
 
-#### *Configuración de Authelia*
+### *Configuración de Authelia*
 
 El archivo `configuration.yml` contiene la toda la configuración de Authelia. Aunque hay comentarios en cada línea importante, aquí se presentan los puntos más importantes:
 
@@ -80,7 +81,7 @@ Tenemos que generar una para cada archivo, es decir, cuatro en total.
 
 O con vuestra herramienta on-line favorita: [IT-Tools](https://it-tools.tech/token-generator), [Generate Random](https://generate-random.org/api-token-generator)...
 
-#### *Configuración de usuarios*
+### *Configuración de usuarios*
 
 El archivo `users_database.yml` bajo el bloque `users:` contiene a su vez un bloque por cada usuario que configuremos:
 
@@ -110,20 +111,20 @@ Sustituir PASSWORD por nuestra contraseña y copiar el resultado desde el primer
 
 > **Tip**: ***si escribimos un espacio antes de todo el comando le estaremos diciendo a la Shell que no almacene la línea en el historial.*** 😎
 
-#### *Otras observaciones*
+### *Otras observaciones*
 
 Dentro de la carpeta `redis/` se generaran archivos que en realidad no tenemos que hacer nada con ellos. Se puede generar un volumen de docker en lugar de un bind mount
 
 El servicio se apoya en Træfik, aunque es adaptable a otros proxies inversos.
 
-#### *Variables de entorno*
+### *Variables de entorno*
 
 * `PUID` y `PGID` son los identificadores de usuario y grupo en formato numérico (ejecutar `id` para conocerlos)
 * `TZ` es la zona horaria en formato `Continente/Ciudad`. [Listado de zonas](https://www.joda.org/joda-time/timezones.html)
 * `DOCKERDIR` es el directorio que contiene todos los servicios de Docker.
 * `DOMAINNAME` es el nombre de nuestro dominio.
 
-#### *Antes de empezar*
+### *Antes de empezar*
 
 Crear la estructura arriba indicada. Es interesante que tanto la carpeta `secrets` como los archivos en su interior tengan permisos 600 (rw- --- ---).
 
@@ -133,7 +134,7 @@ La red `proxy` debe estar presente antes de arrancar el compose.
 
 El contenedor `traefik` debe estar funcionando previamente.
 
-### Primer arranque y registro de dispositivos
+## Primer arranque y registro de dispositivos
 
 ```bash
 docker compose up -d      → arrancamos Authelia en segundo plano
@@ -236,4 +237,4 @@ Tras revisar en el log que todo va bien, iremos a la dirección que hayamos conf
 
 </br>
 
-¡Listo! Ya podemos acceder a nuestras aplicacines con autenticación de doble factor.
+## ¡Listo! Ya podemos acceder a nuestras aplicacines con autenticación de doble factor.

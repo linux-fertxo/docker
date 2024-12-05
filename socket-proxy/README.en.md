@@ -14,22 +14,22 @@
 [![Static Badge](https://img.shields.io/badge/lang-%F0%9F%87%AA%F0%9F%87%B8_es-blue?style=plastic)](README.md)
 
 
-### Thanks to the [Tecnativa](https://github.com/Tecnativa) team's image: [docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy)
+## Thanks to the [Tecnativa](https://github.com/Tecnativa) team's image: [docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy)
 
-### Structure:
+## Structure:
 
     socket-proxy/
      ├─ docker-compose.yml              → docker file
      ├─ .env                            → environment variables
      └─ haproxy.cfg.template (Opcional) → internal config (advanced use)
 
-#### Important! `haproxy.cfg.template`
+### Important! `haproxy.cfg.template`
 
 The use of `haproxy.cfg.template` is **completely optional**, but if you are going to use it **don't** remove `.template` from the filename. Although it may seem that it's only an example, actually it's the real file that's used by the container.
 
 It can be used for example to fit the timeouts or change the internal listening port, the latter used in very specific cases.
 
-#### Other observations (complete comments within each file):
+### Other observations (complete comments within each file):
 
 ```dockerfile
 
@@ -44,7 +44,7 @@ It can be used for example to fit the timeouts or change the internal listening 
                       ↖ Comment or delete if not used
 ----
 ```
-### Container start
+## Container start
 
 ```bash
 docker compose up -d     → start socket-proxy in background
@@ -53,4 +53,4 @@ docker logs socket-proxy -f   → examine the log to check if there is any issue
 ```
 </br>
 
-Ready! We now have an extra layer of security on our Docker socket.
+## Ready! We now have an extra layer of security on our Docker socket.
