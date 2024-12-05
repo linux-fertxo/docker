@@ -72,6 +72,8 @@ Services often use the same middlewares over and over again. A chain is a way of
 
 As we've seen, using the `rules/` folder allows us to drop files into it and have Traefik read and apply them on the fly. But this is not true for any subfolders we make inside, so it's not recursive. If we like to have everything organized and grouped by folders, it won't work.
 
+In the `traefik.yml` file, lines 79 and 80 define the Let's Encrypt server adresses. The first one is the staging server and the second one is the actual server. During the first startup, and until we see that we can obtain a certificate (`cat acme/acme.json`) we must have the staging server uncommented and the actual one commented. This is because the real server has a counter of attempts and if we have many failures in a row we can be banned for a few hours (or even a day). The staging server issues a certificate that, although it's not valid for production, allows us to test that everything works correctly before requesting the real certificate. Once we have obtained the certificate, we can comment the staging server and uncomment the actual one.
+
 The container uses [socket-proxy](../socket-proxy/) for added security, but there are the necessary lines (commented) to work without it.
 
 It uses [Cloudflare](cloudflare.com) as a DNS resolver, but it is possible to use any other.

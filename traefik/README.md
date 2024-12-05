@@ -73,6 +73,8 @@ Habitualmente los servicios hacen uso de los mismos middlewares una y otra vez. 
 
 Como hemos visto, el uso de la carpeta `rules/` permite soltar archivos dentro de ella y que Traefik los lea y aplique sobre la marcha. Esto no es así para cualquier subcarpeta que haya dentro, por lo que no es recursivo. Si nos gusta tener todo ordenado agrupado por carpetas en éste caso no funcionará.
 
+En el archivo `traefik.yml` las líneas 79 y 80 definen los servidores de Let's Encrypt. El primero es el servidor de ensayo y el segundo el real. Durante el primer arranque, y hasta que veamos que podemos obtener un certificado (`cat acme/acme.json`) debemos tener el servidor de ensayo descomentado y el real comentado. Esto es porque el servidor real tiene un contador de intentos y si tenemos muchos fallos seguidos nos pueden banear durante unas horas (o incluso un día). El servidor de ensayo emite un certificado que aunque no es válido para producción, nos permite probar que todo funciona correctamente antes de solicitar el certificado real. Una vez obtenido el certificado, podemos comentar el servidor de ensayo y descomentar el real.
+
 El contenedor hace uso de [socket-proxy](../socket-proxy/) para mayor seguridad, pero contiene las líneas necesarias (comentadas) para funcionar sin él.
 
 Utiliza [Cloudflare](cloudflare.com) como resolvedor DNS, pero es posible utilizar cualquier otro.
