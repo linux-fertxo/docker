@@ -15,7 +15,7 @@ services:
     container_name: traefik
     security_opt:
       - no-new-privileges:true
-    restart: unless-stopped
+    restart: always
     networks:
       - proxy
       - socket_proxy

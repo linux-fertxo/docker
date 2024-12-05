@@ -63,4 +63,3 @@ services:
       - TZ=$TZ
     volumes:
       - $DOCKERDIR/authelia/redis:/data
-
