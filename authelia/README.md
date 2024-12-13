@@ -1,240 +1,251 @@
 <h1>
   <p align="center" width="100%">
-    <img width="30%" src="../.recursos/img/authelia.png">
-    </br></br>
+    <img width="30%" src="../.recursos/img/logos/authelia.png">
+    </br>
     Authelia
-    <h2><p align=center">
-      Authelia es un servidor de autenticación de doble factor (2FA) e inicio de sesión único (SSO) dedicado a la seguridad de aplicaciones y usuarios.
-    </h2>
-  </br>
-  </p> 
+  </p>
 </h1>
 
-[![Static Badge](https://img.shields.io/badge/lang-%F0%9F%87%AC%F0%9F%87%A7_en-blue?style=plastic)](README.en.md)
+<h2>
+  <p align="center" width="100%">
+    Authelia is a 2-Factor Authentication & Single Sign-On server dedicated to the security of applications and users.
+  </p> 
+</h2>
 
-## Basado en la imagen de [Authelia](https://www.authelia.com): [authelia](https://github.com/authelia/authelia/pkgs/container/authelia)
+<h3>
+  <p align="left" width="100%">
+    Based on the image from <a href="https://www.authelia.com">Authelia</a>: <a href="https://github.com/authelia/authelia/pkgs/container/authelia">authelia</a>
+  </p>
+</h3>
 
-- [Basado en la imagen de Authelia: authelia](#basado-en-la-imagen-de-authelia-authelia)
-- [Estructura](#estructura)
-- [Explicación](#explicación)
-  - [*Configuración de Authelia*](#configuración-de-authelia)
-  - [*Configuración de usuarios*](#configuración-de-usuarios)
-  - [*Otras observaciones*](#otras-observaciones)
-  - [*Variables de entorno*](#variables-de-entorno)
-  - [*Antes de empezar*](#antes-de-empezar)
-- [Primer arranque y registro de dispositivos](#primer-arranque-y-registro-de-dispositivos)
-- [¡Listo! Ya podemos acceder a nuestras aplicacines con autenticación de doble factor.](#listo-ya-podemos-acceder-a-nuestras-aplicacines-con-autenticación-de-doble-factor)
+[![Static Badge](https://img.shields.io/badge/lang-%F0%9F%87%AA%F0%9F%87%B8_es-blue?style=plastic)](README.md)
 
-## Estructura
+<h3>
+  Content:
+</h3>
+
+- [Structure](#structure)
+- [Explanation](#explanation)
+  - [*Authelia config*](#authelia-config)
+  - [*User config*](#user-config)
+  - [*Other remarks*](#other-remarks)
+  - [*Environment variables*](#environment-variables)
+  - [*Before start*](#before-start)
+- [First run and device register](#first-run-and-device-register)
+
+## Structure
 
     authelia/
-      ├─ docker-compose.yml               → archivo docker
-      ├─ .env                             → variables de entorno
+      ├─ docker-compose.yml               → dockerfile
+      ├─ .env                             → environment variables
       ├─ config/
-      │    ├─ configuration.yml           → configuración de Authelia
-      │    ├─ users_database.yml          → base de datos de usuarios
-      │    ├─ authelia.log                → registro, se genera al iniciar
-      │    ├─ db.sqlite3                  → base de datos SQLite, se genera al iniciar
-      │    ├─ notification.txt            → mensajes para verificar identidad, se genera al primer uso
-      │    └─ secrets/                    → contraseñas y claves
+      │    ├─ configuration.yml           → main config file
+      │    ├─ users_database.yml          → user database
+      │    ├─ authelia.log                → log file, generated at startup
+      │    ├─ db.sqlite3                  → SQLite database, generated at startup
+      │    ├─ notification.txt            → notification system for identity checks, generated at first use
+      │    └─ secrets/                    → passwords & keys
       │         ├─ jwt_secret
       │         ├─ session_secret
       │         ├─ storage_encryption_key
       │         └─ authelia_session_redis_password
-      └─ redis/                           → datos del servidor redis
+      └─ redis/                           → Redis server data
 
-## Explicación
+## Explanation
 
-La configuración de Authelia puede llegar a ser muy complicada. Aquí se ha optado por una forma sencilla que resulta válida para uno o unos pocos usuarios. Para otras opciones más complejas nos tendremos que remitir a la [documentación oficial de Authelia](https://www.authelia.com/configuration/prologue/introduction/).
+Authelia config can be very complex. Here we've chosen a simple approach that will work for one user or a few of them. For more advanced options we will have to refer to the [official Authelia documentation](https://www.authelia.com/configuration/prologue/introduction/).
 
-Los archivos `docker-compose.yml` y `.env` como siempre no necesitan presentación, son los archivos que contienen todas las instrucciones y variables para crear el contenedor de Authelia.
+The `docker-compose.yml` and `.env` files, as always, need no introduction. They are the files that contain all the instructions and variables to create the Authelia stack.
 
-### *Configuración de Authelia*
+### *Authelia config*
 
-El archivo `configuration.yml` contiene la toda la configuración de Authelia. Aunque hay comentarios en cada línea importante, aquí se presentan los puntos más importantes:
+The `configuration.yml` file contains the entire Authelia config. Here are some highlights:
 
-  * El bloque `server:` ha sido actualizado y ya no sirven las claves `host:` y `port:`. En su lugar, se utiliza la clave `address:` en la forma **`[<scheme>://][hostname]:<port>[/<path>]`** . Por ejemplo, `tcp://:9091`. Se ha optado por dejar las claves viejas comentadas por si os encontráis con otros tutoriales no actualizados.
-  * El bloque `authentication_backend:` define qué tipo de base de datos de usuario y el algoritmo de encriptación utilizados.
-  * El bloque `access_control:` define las reglas de acceso.
-  * El bloque `session:` define la configuración de los tiempos de vida de sesión, así como la dirección del servidor redis los que mantendrá en memoria.
-  * El bloque `regulation:` define cómo se manejan los intentos fallidos.
-  * El bloque `storage:` define cómo se guardan los datos.
-  * El bloque `notifier:` define de qué manera nos comunicaremos con los usuarios para verificar su identidad.
+  * The `server:` block has been updated to the latest syntaxis as `host:` and `port:` keys are deprecated. Instead, the new `address:` key is used with format **`[<scheme>://][hostname]:<port>[/<path>]`** , e.g.: `tcp://:9091`. The old keys have been kept (and commented out) in case you find other tutorials out-of-date out there.
+  * The `authentication_backend:` block defines what type of user database and encryption algorithm are used.
+  * The `access_control:` block defines access rules.
+  * The `session:` block defines the sessions' lifetime, as well as the address and port where lies the redis server, whose function is to keep this data cached in memory.
+  * The `regulation:` block defines how failed attempts are handled.
+  * The `storage:` block defines how data is stored.
+  * The `notifier:` block defines how users will be notified of actions to verify their identity.
 
-La subcarpeta `secrets` contiene las claves y contraseñas que se utilizarán en la configuración de Authelia. Cada archivo contendrá una clave que según la documentación oficial...
+The `secrets` subfolder contains the keys and passwords that will be used in the Authelia config. Each file will contain a key that according to the official documentation...
 
-> Se **recomienda encarecidamente** que sea una cadena alfanumérica aleatoria con 64 o más caracteres.
+> It’s **strongly recommended** this is a Random Alphanumeric String with 64 or more characters.
 
-Tenemos que generar una para cada archivo, es decir, cuatro en total. 
-¿Cómo las generamos? Tenemos muchas opciones desde la shell de Linux:
+We need to generate one for each file, i.e. four in total.
+How do we generate them? We have plenty options from the Linux shell:
 
 ```bash
-# Con openssl (disponible por defecto en la mayoría de distribuciones):
+# With openssl (available by default in most distributions):
   openssl rand -hex 64
-# Con pwgen (necesita instalación):
+# With pwgen (needs to be installed):
   pwgen -s 64
-# Mediante Docker y el propio contenedor de Authelia (no es necesario que esté en servicio todavía):
+# With Docker and the Authelia container itself (doesn't need to be running yet):
   docker run --rm authelia/authelia:latest authelia crypto rand --length 64 --charset alphanumeric
-# Sin ningún tipo de herramienta instalada:
+# Without any type of tool installed:
   date +%s | sha256sum | base64 | head -c 64 ; echo
 ```
+>
 
-O con vuestra herramienta on-line favorita: [IT-Tools](https://it-tools.tech/token-generator), [Generate Random](https://generate-random.org/api-token-generator)...
+Or with your favorite online tool: [IT-Tools](https://it-tools.tech/token-generator), [Generate Random](https://generate-random.org/api-token-generator )...
 
-### *Configuración de usuarios*
+### *User config*
 
-El archivo `users_database.yml` bajo el bloque `users:` contiene a su vez un bloque por cada usuario que configuremos:
+The `users:` block of the `users_database.yml` file in turn contains a block for each user we configure:
 
 ```yaml
 users:
-  pepito:
-    displayname: "Pepito Pérez"
-    password: "" → Hay un gran vacío aquí, pero no os preocupéis, lo rellenaremos en el siguiente paso. 😉
-    email: pepito@ejemplo.com
+  johndoe:
+    displayname: "John Doe"
+    password: "" → There's a big gap here, but don't worry, we'll fill it in the next step. 😉
+    email: johndoe@example.com
     groups:
       - admins
       - dev
-  # usuario2:
+  # user2:
     # etc...  
 ```
 </br>
 
-Efectivamente, **la contraseña está vacía**. Para generar una acorde al algoritmo que hemos especificado en el archivo `configuration.yml`, podemos utilizar el comando `authelia crypto hash`. 
+Sure enough, **password is empty**. To generate one according to the algorithm we've defined in the `configuration.yml` file, we can use the `authelia crypto hash` command.
 
-*¡Pero todavía no tenemos Authelia funcionando!* os oigo exclamar... Tranquilos, lo que haremos será pedir ejecutarlo al contenedor. Al ser la primera vez que le pedimos a Docker hacer algo con Authelia, lo primero que hará será descargar la imagen (eso que llevamos adelantado para luego), por lo que tendremos que esperar un rato para obtener el resultado. Aquí el comando:
+*But we don't have Authelia running yet!* I hear you exclaim... Don't worry, what we'll do is ask the container to run it. As this is the first time that we ask Docker to do something with Authelia, the first thing it will do is download the image (which we'll already have in advance for later), so we will have to wait a while to get the result. Here's the command:
 
 ```bash
 docker run authelia/authelia:latest authelia crypto hash generate argon2 --password PASSWORD
 ```
+>
 
-Sustituir PASSWORD por nuestra contraseña y copiar el resultado desde el primer símbolo `$` hasta el final dentro del bloque `password:`.
+Replace PASSWORD with your real password and cut from the first `$` symbol till the end of the line and paste it within the `""` in the `password:` block.
 
-> **Tip**: ***si escribimos un espacio antes de todo el comando le estaremos diciendo a la Shell que no almacene la línea en el historial.*** 😎
+> **Tip**: If we put a space before the whole command we will be telling the Shell not to store the line in the history.*** 😎
 
-### *Otras observaciones*
+### *Other remarks*
 
-Dentro de la carpeta `redis/` se generaran archivos que en realidad no tenemos que hacer nada con ellos. Se puede generar un volumen de docker en lugar de un bind mount
+Inside the `redis/` folder some files will be generated that we don't really have to do anything with. You can create a docker volume instead of a bind mount.
 
-El servicio se apoya en Træfik, aunque es adaptable a otros proxies inversos.
+The service is based on Traefik, although it can be adapted to other reverse proxies.
 
-### *Variables de entorno*
+### *Environment variables*
 
-* `PUID` y `PGID` son los identificadores de usuario y grupo en formato numérico (ejecutar `id` para conocerlos)
-* `TZ` es la zona horaria en formato `Continente/Ciudad`. [Listado de zonas](https://www.joda.org/joda-time/timezones.html)
-* `DOCKERDIR` es el directorio que contiene todos los servicios de Docker.
-* `DOMAINNAME` es el nombre de nuestro dominio.
+* `PUID` and `PGID` are the user and group IDs in numeric format (run `id` to find them)
+* `TZ` is the time zone in `Continent/City` format. [List of zones](https://www.joda.org/joda-time/timezones.html)
+* `DOCKERDIR` is the parent directory containing all Docker services.
+* `DOMAINNAME` is the name of our domain.
 
-### *Antes de empezar*
+### *Before start*
 
-Crear la estructura arriba indicada. Es interesante que tanto la carpeta `secrets` como los archivos en su interior tengan permisos 600 (rw- --- ---).
+Create the structure shown above. It's interesting that both the `secrets` folder and the files inside it all have permissions 600 (rw- --- ---).
 
-Asegurarse de que tanto los archivos de la carpeta `secrets` como la contraseña de nuestro usuario en el archivo `users_database.yml` tengan contenido.
+Make sure that both the files in the `secrets` folder and our user's password in the `users_database.yml` file have some content.
 
-La red `proxy` debe estar presente antes de arrancar el compose.
+The `proxy` network must be present before compose is started.
 
-El contenedor `traefik` debe estar funcionando previamente.
+The `traefik` container must be up and running beforehand.
 
-## Primer arranque y registro de dispositivos
+## First run and device register
 
 ```bash
-docker compose up -d      → arrancamos Authelia en segundo plano
+docker compose up -d      → run Authelia in the background
 
-docker logs authelia -f   → examinamos los registros para ver si hay algún problema (CTRL+c para salir)
+docker logs authelia -f   → examine the logs to see if there are any problems (CTRL+c to exit)
 ```
 
-Tras revisar en el log que todo va bien, iremos a la dirección que hayamos configurado en `docker-compose.yml` (la línea auth.$DOMAINNAME) y seguiremos los siguientes pasos:
-
 </br>
 
+After checking the log and be sure that everything is going well, we'll go to the address that we've configured previously in `docker-compose.yml` (the `auth.$DOMAINNAME` line) and proceed with the following steps **(screenshots in Spanish)**:
+
   <p align="center" width="100%">
-    <img width="33%" src="../.recursos/img/authelia_screenshot_01.png">
-    </br>Introducimos nuestras credenciales
+    <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_01.png">
+    </br>Enter your credentials
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="33%" src="../.recursos/img/authelia_screenshot_02.png">
-    </br>Pinchamos en Registar Dispositivo
+    <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_02.png">
+    </br>Click on Register Device
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="33%" src="../.recursos/img/authelia_screenshot_03.png">
-    </br>Primero registraremos una contraseña de un solo uso
+    <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_03.png">
+    </br>We'll start by setting a One Time Password first
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="33%" src="../.recursos/img/authelia_screenshot_04.png">
-    </br>Nos advierte que nos llegará un correo... que no llegará porque no tenemos un servidor de correo configurado. Acudimos al archivo `notification.txt` de la carpeta `config/`
+    <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_04.png">
+    </br>It warns us that we will receive an email... which will never arrive because we don't have configured any email server. We go to the `notification.txt` file in the `config/` folder.
+    </p>
+
+</br>
+
+  <p align="center" width="100%">
+    <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_05.png">
+    </br>Copy the random code and paste it in the previous dialogue
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="33%" src="../.recursos/img/authelia_screenshot_05.png">
-    </br>Copiamos el código aleatorio y lo introducimos en el diálogo anterior
+    <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_06.png">
+    </br>Click on NEXT
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="33%" src="../.recursos/img/authelia_screenshot_06.png">
-    </br>Pulsamos en SIGUIENTE
+    <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_07.png">
+    </br>Scan the QR code with your favourite app. In my case I chose <a href="https://play.google.com/store/apps/details?id=com.authy.authy&hl=es&pli=1">Authy for Android</a>
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="33%" src="../.recursos/img/authelia_screenshot_07.png">
-    </br>Escaneamos el código QR con nuestra aplicación favorita. En mi caso es <a href="https://play.google.com/store/apps/details?id=com.authy.authy&hl=es&pli=1">Authy para Android</a>
+    <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_08.png">
+    </br>Enter the timed generated code
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="33%" src="../.recursos/img/authelia_screenshot_08.png">
-    </br>Introducimos el código generado
+    <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_09.png">
+    </br>Well we now have a second factor configured! Now let's try with a physical device. Click ADD in WebAuthn Credentials  </p>
+
+</br>
+
+  <p align="center" width="100%">
+    <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_10.png">
+    </br>In this case we will register a Yubikey 5C
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="33%" src="../.recursos/img/authelia_screenshot_09.png">
-    </br>Ya tenemos configurado un segundo factor, ahora vamos a probar con un dispositivo físico pulsando AÑADIR en Credenciales WebAuthn
+    <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_11.png">
+    </br>Enter the PIN if you've one configured
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="33%" src="../.recursos/img/authelia_screenshot_10.png">
-    </br>En éste caso daremos de alta una Yubikey 5C
+    <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_12.png">
+    </br>Touch the physical button on the Yubikey
   </p>
 
 </br>
 
   <p align="center" width="100%">
-    <img width="33%" src="../.recursos/img/authelia_screenshot_11.png">
-    </br>Introducimos nuestro PIN
+    <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_13.png">
+    </br>And finally, here we can choose the method that will be presented by default. We can always say which one when it's requested, this is just a preference.
   </p>
 
 </br>
 
-  <p align="center" width="100%">
-    <img width="33%" src="../.recursos/img/authelia_screenshot_12.png">
-    </br>Tocamos el botón físico de la Yubikey
-  </p>
-
-</br>
-
-  <p align="center" width="100%">
-    <img width="33%" src="../.recursos/img/authelia_screenshot_13.png">
-    </br>Y por último podremos elegir el método que se nos presentará por defecto. Siempre podremos decir cual en el momento en que nos lo solicite, esto es tan solo una preferencia.
-  </p>
-
-</br>
-
-## ¡Listo! Ya podemos acceder a nuestras aplicacines con autenticación de doble factor.
+<h3>
+  Done! We can now access our applications with two-factor authentication.
+</h3>

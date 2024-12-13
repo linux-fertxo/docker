@@ -1,127 +1,182 @@
 <h1>
   <p align="center" width="100%">
-    <img width="22%" src="../.recursos/img/traefik.png">
-    </br></br>
-    Træfik v3
+	<img width="22%" src="../.recursos/img/logos/traefik.png">
+	</br>
+	Træfik v3
   </p> 
 </h1>
 
 <h2> 
   <p align="center" width="100%">
-    Un proxy inverso con certificados SSL para redirigir las peticiones entrantes a sus respectivos servicios mediante HTTPS
+	A reverse proxy with SSL certificates to redirect incoming requests to their respective services through HTTPS
   </p>
-  </br>
 </h2>
 
-[![Static Badge](https://img.shields.io/badge/lang-%F0%9F%87%AC%F0%9F%87%A7_en-blue?style=plastic)](README.en.md)
+<h3>
+  <p align="left" width="100%">
+	Based on the image from <a href="https://traefik.io">Træfik</a>: <a href="https://github.com/traefik/traefik">traefik</a>
+  </p>
+</h3>
 
-## Basado en la imagen de [Traefik](https://traefik.io): [traefik](https://github.com/traefik/traefik)
+[![Static Badge](https://img.shields.io/badge/lang-%F0%9F%87%AA%F0%9F%87%B8_es-blue?style=plastic)](README.es.md)
 
-- [Basado en la imagen de Traefik: traefik](#basado-en-la-imagen-de-traefik-traefik)
-- [Estructura](#estructura)
-- [Explicación](#explicación)
-  - [*Espera...¿Qué es un middleware?*](#esperaqué-es-un-middleware)
-  - [*¿Y una chain?*](#y-una-chain)
-  - [*Otras observaciones*](#otras-observaciones)
-  - [*Variables de entorno*](#variables-de-entorno)
-  - [*Antes de empezar*](#antes-de-empezar)
-    - [*Obtención del token API de Cloudflare*](#obtención-del-token-api-de-cloudflare)
-- [Arranque del contenedor](#arranque-del-contenedor)
-- [¡Listo! Ya podemos ir a nuestros servicios por su nombre y con certificados SSL.](#listo-ya-podemos-ir-a-nuestros-servicios-por-su-nombre-y-con-certificados-ssl)
+<h3>
+  Content:
+</h3>
 
-## Estructura
+- [Structure](#structure)
+- [Explanation](#explanation)
+	- [*Wait... What is a Middleware?*](#wait-what-is-a-middleware)
+	- [*And a chain?*](#and-a-chain)
+	- [*Other remarks*](#other-remarks)
+	- [*Environment variables*](#environment-variables)
+	- [*Before starting*](#before-starting)
+		- [*Obtaining the Cloudflare API token*](#obtaining-the-cloudflare-api-token)
+- [Container start](#container-start)
 
-    traefik/
-      ├─ docker-compose.yml               → archivo docker
-      ├─ .env                             → variables de entorno
-      ├─ traefik.yml                      → configuración estática
-      ├─ acme/
-      │    └─ acme.json                   → certificado SSL
-      ├─ logs/
-      │    ├─ access.log                  → registro de acceso
-      │    └─ traefik.log                 → registro de apliación
-      └─ rules/                           → configuración dinámica
-           ├─ external.yml                → redirección a servicios no-docker
-           ├─ middlewares.yml             → middlewares (ver más adelante)
-           ├─ middlewares-chains.yml      → middlewares encadenados (ver más adelante)
-           └─ tls-opts.yml                → opciones de TLS
+## Structure
 
-## Explicación
+	traefik/
+	  ├─ docker-compose.yml                   → dockerfile
+	  ├─ .env                                 → environment variables
+	  ├─ traefik.yml                          → static configuration
+	  ├─ acme/
+	  │    └─ acme.json                       → SSL certificate
+	  ├─ logs/
+	  │    ├─ access.log                      → access log
+	  │    └─ traefik.log                     → application log
+	  └─ rules/                               → dynamic configuration
+	       ├─ external.yml                    → redirection to non-docker services
+	       ├─ middlewares.yml                 → middlewares (see below)
+	       ├─ middlewares-chains.yml          → chained middlewares (see below)
+	       └─ tls-opts.yml                    → TLS options
 
-Los archivos `docker-compose.yml` y `.env` no necesitan presentación, son los archivos que contienen todas las instrucciones y variables para crear el contenedor de Traefik.
+## Explanation
 
-El archivo `traefik.yml` recoge la configuración de Traefik **_"estàtica"_**, esto es, la configuración que no cambia con el tiempo (o que cambia muy raramente).
+The `docker-compose.yml` and `.env` files need no introduction, they are the files that contain all the instructions and variables to create the Traefik container.
 
-La carpeta `acme/` que contiene el archivo `acme.json` es donde se almacenan los certificados SSL generados por Let's Encrypt. Este archivo tiene un tratamiento especial, ya que deberemos crearlo personalmente y asignarle permisos de lectura y escritura **sólo** al usuario que ejecuta el contenedor de Traefik, mediante `chmod 600 acme.json`
+The `traefik.yml` file contains the **_"static"_** Traefik configuration, that is, the configuration that does not change over time (or changes very rarely).
 
-La carpeta `logs/` contiene los archivos de registro de acceso `access.log` y de la aplicación de Traefik `traefik.log`. Se puede funcionar sin ellos, pero es recomendable tenerlos a mano para depurar problemas o utilizarlos para que otros contenedores como por ejemplo [**crowdsec**](../crowdsec), busquen patrones de comportamiento sospechosos. Estos archivos también tendremos que crearlos personalmente, ya que Docker sólo es capaz de crear directorios si es necesario, pero no archivos.
+The `acme/` folder containing the `acme.json` file is where the SSL certificates generated by Let's Encrypt are stored. This file has special treatment, since we must create it manually and assign read and write permissions **only** to the user running the Traefik container, using `chmod 600 acme.json`
 
-Por último, la carpeta `rules/` contiene la configuración **_"dinámica"_** de Traefik. Dinámica en el sentido de que cada archivo que soltemos dentro será leído por Traefik y se aplicará a la configuración que en ellos se indica. Y dinámica en el sentido de que podemos crear nuevos servicios (o eliminarlos) con cierta asiduidad, como es muy probable que ocurra en el entorno de un Homelab. Hablemos primero de `external.yml` y `tls-opts.yml` que son los más sencillos de explicar.
+The `logs/` folder contains the access log files `access.log` and the Traefik application log files `traefik.log`. We can work without them, but it's recommended to have them on hand to debug problems or use them for other containers such as [**crowdsec**](../crowdsec), to look for suspicious behavior patterns. These files will also have to be created manually, since Docker is only capable of creating directories if necessary, but not files.
 
-  * `external.yml`: Contiene las reglas para redirigir a servicios que no son contenedores de Docker. Por ejemplo, si tenemos un servicio web en un servidor remoto, podemos indicarle a Traefik mediante éstas reglas a dónde tiene que ir cada petición. Este archivo en realidad es un ejemplo de cómo hacerlo, ya que podemos crear un archivo para cada servicio, uno para todos los servicios o una combinación de ambos.
-  * `tls-opts.yml`: Contiene un conjunto de opciones de uso común de TLS.
+Finally, the `rules/` folder contains Traefik's **_"dynamic"_** configuration. Dynamic in the sense that each file we drop inside will be read by Traefik and will apply the configuration inmediately. And dynamic in the sense that we can create new services (or delete them) with some regularity, as it's very likely to happen in a Homelab environment, so we can alter the rules whenever we want. Let's first talk about `external.yml` and `tls-opts.yml`, which are easier to explain.
 
-De entre todos los archivos que hay dentro de `rules/` hay dos que son de especial importancia: `middlewares` y `middlewares-chains`. 
+* `external.yml`: Contains rules for redirecting incoming requests to services that are not Docker containers. For example, if we have a web service on a remote server, we can tell Traefik through these rules where each request should go. This file is actually an example of how to do it, since we can create a file for each service, one for all services, or a combination of both.
+* `tls-opts.yml`: Contains a set of commonly used TLS options.
 
-### *Espera...¿Qué es un middleware?*
+Among all the files inside `rules/` there are two that are of special importance: `middlewares` and `middlewares-chains`.
 
-Los middlewares son trozos de código que se intercalan entre la petición y el servicio. Son una forma de "interceptar" las peticiones entrantes y realizar cambios en ellas, normalmente necesarios para que lo que le llegue al servicio sea entendible por éste y por tanto que funcione.
+### *Wait... What is a Middleware?*
 
-### *¿Y una chain?*
+Middlewares are pieces of code that are inserted between the request and the service. They are a way of "intercepting" requests and making changes to them, which are usually necessary in order to make the target service work.
 
-Habitualmente los servicios hacen uso de los mismos middlewares una y otra vez. Una chain, o cadena en inglés, es una forma de agruparlos bajo un mismo nombre y así aplicarlos de manera conjunta a cada servicio. Dentro de las etiquetas de cada servicio podremos especificar la chain que queramos que se aplique.
+### *And a chain?*
 
-### *Otras observaciones*
+Services often use the same middlewares over and over again. A chain is a way of grouping them under the same name and thus applying them jointly to the service. Then we can specify the chain we want to be applied through Traefik labels.
 
-Como hemos visto, el uso de la carpeta `rules/` permite soltar archivos dentro de ella y que Traefik los lea y aplique sobre la marcha. Esto no es así para cualquier subcarpeta que haya dentro, por lo que no es recursivo. Si nos gusta tener todo ordenado agrupado por carpetas en éste caso no funcionará.
+### *Basic authentication (for now)*
 
-En el archivo `traefik.yml` las líneas 79 y 80 definen los servidores de Let's Encrypt. El primero es el servidor de ensayo y el segundo el real. Durante el primer arranque, y hasta que veamos que podemos obtener un certificado (`cat acme/acme.json`) debemos tener el servidor de ensayo descomentado y el real comentado. Esto es porque el servidor real tiene un contador de intentos y si tenemos muchos fallos seguidos nos pueden banear durante unas horas (o incluso un día). El servidor de ensayo emite un certificado que aunque no es válido para producción, nos permite probar que todo funciona correctamente antes de solicitar el certificado real. Una vez obtenido el certificado, podemos comentar el servidor de ensayo y descomentar el real.
+We are not going to expose our traefik panel to anyone, so for now and until we set up a better authentication system ([Authelia](../authelia/)), we are going to use basic authentication.
 
-El contenedor hace uso de [socket-proxy](../socket-proxy/) para mayor seguridad, pero contiene las líneas necesarias (comentadas) para funcionar sin él.
+We are going to create a file in a safe place with a username:password pair inside. If we want to add more users then write a line for each one.
 
-Utiliza [Cloudflare](cloudflare.com) como resolvedor DNS, pero es posible utilizar cualquier otro.
+The password has to be encrypted with the MD5, SHA1 or BCrypt standards. Although we can do it ourselves, from experience I've found that it is better to use the `htpasswd` utility that comes included with Apache2, or an online version if we don't want to install anything. Also it's supposed to be a temporary way to protect the dashboard until we configure Authelia, so don't worry too much about it.
 
-### *Variables de entorno*
+So, if our user is `user` and the password is `PASSWORD`, write in the file the user name followed by a colon and then the encrypted password **without leaving spaces between any of them.**
 
-* `PUID` y `PGID` son los identificadores de usuario y grupo en formato numérico (ejecutar `id` para conocerlos)
-* `TZ` es la zona horaria en formato `Continente/Ciudad`. [Listado de zonas](https://www.joda.org/joda-time/timezones.html)
-* `DOCKERDIR` es el directorio que contiene todos los servicios de Docker.
-* `DOMAINNAME` es el nombre de nuestro dominio.
-* `CLOUDFLARE_EMAIL` es el correo con el que tengamos el dominio registrado en Cloudflare.
-* `CF_DNS_API_TOKEN` es un identificador para demostrar que somos dueños del dominio y así obtener los certificados.
+```
+user:PASSWORD becomes:
 
-### *Antes de empezar*
+user:$apr1$akhbl7id$BDDd7dzu.xFfgUBPTYFTY1
+```
+>
 
-* Crear la estructura arriba indicada, con la especial atención de los permisos de `acme.json`. **Si no son 600 (rw- --- ---) Traefik no arrancará.**
+Finally write the path to the file inside `middlewares.yml`:
 
-* La red `proxy` debe estar presente antes de arrancar el contenedor de Traefik. Se puede comentar la línea `external: true` en `docker-compose.yml` y Traefik la creará automáticamente, pero esto tiene el inconveniente de que si el contenedor falla o no está en servicio, el resto de servicios que la tienen definida también caerán. Por eso es mejor crearla manualmente:
+```yaml
+http:
+middlewares:
+middlewares-basic-auth:
+basicAuth:
+usersFile: "/path/secure/file/.users"
+```
+
+### *Other remarks*
+
+As we've seen, using the `rules/` folder allows us to drop files into it and have Traefik read and apply them on the fly. But this is not true for any subfolders we make inside, so it's not recursive. If we like to have everything organized and grouped by folders, it won't work.
+
+In the `traefik.yml` file, lines 79 and 80 define the Let's Encrypt server adresses. The first one is the staging server and the second one is the production server. During the first startup, and until we see that we can obtain a certificate (`cat acme/acme.json`) we must have the staging server uncommented and the production one commented. This is because the production server has a counter of attempts and if we have many failures in a row we can be banned for a few hours (or even days). The staging server issues a certificate that, although it's not valid, certainly allows us to test that everything works correctly before requesting the actual certificate. Once we have obtained the certificate, we can comment the staging server and uncomment the production one.
+
+The container uses [socket-proxy](../socket-proxy/) for added security, but there are the necessary lines (commented) to work without it.
+
+It uses [Cloudflare](cloudflare.com) as a DNS resolver, but it is possible to use any other.
+
+### *Environment variables*
+
+* `PUID` y `PGID` are the user and group identifiers in numeric format (run `id` to find out)
+* `TZ` is the time zone in `Continent/City` format. [List of zones](https://www.joda.org/joda-time/timezones.html)
+* `DOCKERDIR` is the parent directory containing all Docker services.
+* `DOMAINNAME` is the name of our domain.
+* `CLOUDFLARE_EMAIL` is the email address with which we registered the domain with Cloudflare.
+* `CF_DNS_API_TOKEN` is an identifier to prove that we own the domain and thus obtain the certificates.
+
+### *Before starting*
+
+* Create the folders and files structure indicated above, paying special attention to `acme.json`'s permissions. **If they are not 600 (rw- --- ---) Traefik won't start.**
+
+* The `proxy` network must be present before starting the Traefik container. You can comment out the `external: true` line in `docker-compose.yml` and Traefik will create it automatically, but this has the drawback that if the container fails or is not running, the other services that rely on it will also go down. That is why it's better to create it manually:
 
 ```bash
 docker network create proxy
 ```
 
-* Si queremos usar el panel de Traefik desde el exterior, tendremos que crear un registro CNAME en nuestro DNS que apunte hacia él. En `docker-compose.yml` se indica que el panel estará disponible en `https://traefik.$DOMAINNAME`.
+* Uncomment line 80 and comment out line 81 of the `traefik.yml` file. Some Cloudflare users have encountered issues and had to disable the Proxy (orange cloud). In my case, this was not necessary.
 
-#### *Obtención del token API de Cloudflare*
+* If we want to use the Traefik dashboard from outside our local network, we will have to create a CNAME record in our DNS provider that points to our domain. For example, `docker-compose.yml` shows that the panel will be available at `https://traefik.$DOMAINNAME`.
 
-* Acudimos al panel de control de Cloudflare y hacemos clic en nuestro perfil en la esquina superior derecha.
-* En el panel izquierdo, bajo la sección "Mi perfil", hacemos clic en "Tokens API".
-* Abajo del todo, en "Crear token personalizado", hacemos clic en "Comenzar".
-* En "Nombre del token", le asignamos un nombre. El nombre en sí no importa, es solo para nuestra propia referencia.
-* En "Permisos", queremos dos: "Zona → Zona → Leer" y "Zona → DNS → Editar".
-* En "Recursos de zona", seleccionamos "Incluir → Zona específica" y seleccionamos nuestro dominio.
-* Hacemos clic en "Continuar al resumen".
-* Se nos presentará un resumen del token con todas las opciones que hemos seleccionado en los pasos anteriores. Si estamos de acuerdo, hacemos clic en "Crear token"
-* **ATENCION**: El código sólo aparece una vez. Si no lo copiamos en éste momento por cualquier causa, debemos borrarlo y crear uno nuevo.
-* Copia el token y pégalo en la variable de entorno `CF_DNS_API_TOKEN` del archivo `.env`.
+#### *Obtaining the Cloudflare API token*
 
-## Arranque del contenedor
+* Go to the Cloudflare dashboard and click on your profile in the top right corner.
+* In the left panel, click on "API Tokens" under "My Profile" section.
+* Below, under "Create Custom Token" section, click on "Get Started".
+* In "Token name" give it a name. The name doesn't matter it's only for your own reference.
+* In "Permissions", you'll want "Zone → Zone → Read" and "Zone → DNS → Edit".
+* In "Zone Resources" select "Include → Specific Zone" and enter your domain.
+* Click on "Continue to summary".
+* Then you will see a summary of the token creation process. Click on "Create Token".
+* **CAUTION**: The code only appears once. If you don't copy it now for whatever reason, you must delete it and create a new one.
+* Copy the token and paste it into the `CF_DNS_API_TOKEN` environment variable in `.env` file.
+
+## Container start
 
 ```bash
-docker compose up -d     → arrancamos Traefik en segundo plano
+# start Traefik in detached mode
+docker compose up -d
 
-docker logs traefik -f   → examinamos los registros para ver si hay algún problema (CTRL+c para salir)
+# examine the logs to see if there are any problems (CTRL+c to exit)
+docker logs traefik -f
 ```
 </br>
 
-## ¡Listo! Ya podemos ir a nuestros servicios por su nombre y con certificados SSL.
+The process of obtaining a certificate takes some time. After a few minutes, check the contents of `acme/acme.json` to see if we've obtained the test certificate. If so, revert lines 80 and 81 on `traefik.yml` file (comment out 80 and uncomment 81) and finally reset the acme/acme.json file with the following command:
+
+```bash
+: > acme/acme.json && chmod 600 acme/acme.json
+```
+
+**Important:** Both `:` and `>` are part of the command, so when copying it **make sure they aren't left out!**
+
+Finally we start Traefik again:
+
+```bash
+# force to recreate the container from scratch
+docker compose up -d --force-recreate
+```
+
+</br>
+
+<h3>
+	Ready! Now we can reach our services in our own domain with SSL certificates.
+</h3>

@@ -1,16 +1,15 @@
 <h1>
   <p align="center" width="100%">
-    <img width="30%" src="../.recursos/img/mariadb.png">
-    </br></br>
+    <img width="30%" src="../.recursos/img/logos/mariadb.png">
+    </br>
     MariaDB
   </p> 
 </h1>
 
-<h4> 
+<h2>
   <p align="center" width="100%">
     MariaDB is a community-developed, commercially supported fork of MySQL
   </p>
-  </br>
-</h4>
+</h2>
 
 ### COMING SOON™

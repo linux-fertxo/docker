@@ -2,9 +2,9 @@
 networks:
   proxy:
     name: proxy
-    external: true                                                            # Creada manualmente previamente
+    external: true                                                            # Creada previamente
 
-#=========================================================== SECRETOS
+#============================================================================= SECRETOS
 secrets:
   JWT_SECRET:
     file: '$DOCKERDIR/authelia/config/secrets/jwt_secret'
@@ -15,10 +15,10 @@ secrets:
   AUTHELIA_SESSION_REDIS_PASSWORD:
     file: '$DOCKERDIR/authelia/config/secrets/authelia_session_redis_password'
 
-#=========================================================== SERVICIOS
+#============================================================================= SERVICIOS
 services:
 
-  #--------------------------------------------------------- Authelia
+  #--------------------------------------------------------------------------- Authelia
   authelia:
     image: authelia/authelia:latest
     container_name: authelia
@@ -50,7 +50,7 @@ services:
       - 'traefik.http.middlewares.authelia.forwardauth.trustForwardHeader=true'
       - 'traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email'
 
-  #--------------------------------------------------------- Redis
+  #--------------------------------------------------------------------------- Redis
   redis:
     image: redis:alpine
     container_name: auth-redis

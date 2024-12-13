@@ -4,7 +4,7 @@
 ###############################################################
 
 server:
-#  host: 0.0.0.0                                                              # Host y Port están obsoletos. Los he dejado por si veis otras guías más antiguas.
+#  host: 0.0.0.0                                                              # Host y Port están obsoletos. Los he dejado por si consultáis otras guías más antiguas.
 #  port: 9091
   address: "tcp://:9091"                                                      # Esta es la forma actual. [<scheme>://][hostname]:<port>[/<path>]
 log:
@@ -47,8 +47,13 @@ access_control:
       networks:
         - '10.0.0.0/8'
   rules:
-    - domain: 'ejemplo.com'                                                   # Aquí permite el acceso al dominio base a todo el mundo.
+    - domain: 'ejemplo.com'                                                   # Aquí permite el acceso al dominio base a todo el mundo. (Sitio web público, por ejemplo)
       policy: bypass
+
+    - domain: 'ejemplo.com'                                                   # Ejemplo de acceso a un recurso
+      resources:
+        - '^/api([/?].*)?$'                                                   # El recurso empieza por "/api", "/api/" o "/api?"
+      policy: bypass                                                          # Permite el acceso a "ejemplo.com/api" o las otras opciones de arriba.
 
     - domain: '*.ejemplo.com'                                                 # Aquí indicamos que si se intenta acceder a los subdominios desde una de las redes
       networks:                                                               # definidas anteriormente, tan sólo pida contraseña.
@@ -58,6 +63,12 @@ access_control:
 
     - domain: '*.ejemplo.com'                                                 # Para el resto, pide contraseña y código de autenticación.
       policy: two_factor
+
+    - domain: 'ejemplo.com'                                                   # Aquí un ejemplo para aplicaciones o recursos que no tienen subdominio propio.
+      resources:
+        - '^/admin.*$'                                                        # Pedirá 2FA si intentamos acceder a "ejemplo.com/admin".
+      policy: two_factor
+
 
 session:
   name: authelia_session

@@ -1,16 +1,15 @@
 <h1>
   <p align="center" width="100%">
-    <img width="30%" src="../.recursos/img/vscode.png">
+    <img width="30%" src="../.recursos/img/logos/vscode.png">
     </br></br>
     VS Code Server
   </p> 
 </h1>
 
-<h4> 
+<h2> 
   <p align="center" width="100%">
     A containerized version of the famous code editor developed by Microsoft
   </p>
-  </br>
-</h4>
+</h2>
 
 ### COMING SOON™

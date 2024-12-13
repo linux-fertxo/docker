@@ -1,39 +1,66 @@
 <h1>
     <p align="center" width="100%">
-        <img width="50%" src=".recursos/img/linuxfertxo.png">
+        <img width="60%" src=".recursos/img/logos/linuxfertxo.png">
         </br>
-        Mis servicios Docker para Homelab
+        My Docker services for Homelab
         <h2><p align="center">
-            Una selección comentada de contenedores que espero sirva de inspiración para vuestros proyectos
+            A commented⁽¹⁾ selection of containers that I hope will inspire your projects
         </h2>
-    </p>
-    
+        <h5>
+            ⁽¹⁾ Note: All README have english translation, but comments inside individual files are only in Spanish at the moment.
+        </h5>
+    </p> 
 </h1>
 
-[![Static Badge](https://img.shields.io/badge/lang-%F0%9F%87%AC%F0%9F%87%A7_en-blue?style=plastic)](README.en.md)
+[![Static Badge](https://img.shields.io/badge/lang-%F0%9F%87%AA%F0%9F%87%B8_es-blue?style=plastic)](README.es.md)
 
-### Estructura del repositorio:
+### Repository structure:
 
-* Cada servicio tiene dentro su propio `README.md`, con ejemplos y archivos auxiliares así como comentarios donde he pensado que era relevante. Echa un vistazo a cada uno para entender mejor cómo funcionan.
-* Se pueden hacer funcionar tanto desde CLI como importándolos en Portainer, Dockge...
-* Aunque se pueden desplegar en cualquier momento, los siguientes contenedores es interesante hacerlo en este orden por tener dependencias unos de otros:
+* Each service has its own folder and `README.md`. Check out each one to better understand how they work.
+* They can be run from CLI or be imported to Portainer, Dockge...
+* Although they can be deployed at any time, it's interesting to deploy the following containers in this order because there are dependencies on each other:
 
       1. Socket Proxy
-      2. Traefik 
-      3. Authelia
-      4. Crowdsec
-      5. El resto de contenedores con etiquetas para Traefik (Nextcloud, etc)
+      3. Traefik 
+      4. Authelia
+      5. Nextcloud
+      6. Crowdsec
+      7. Any other container with Traefik labels
 
-### Tareas pendientes:
+### What can I learn here?
+
+All services are fully functional, but I am aware that there are different (infinite) ways to approach each one. Although all of them could be improved, I have tried to make each one have at least one new technique that we can apply in other contexts.
+
+* In Socket Proxy we will see the **general structure of a docker-compose**:
+  * Services, networks, volumes and environment variables.
+  * The inclusion of `privileged` to create containers with elevated privileges on the host machine.
+* In Traefik we will see the **use of labels** and also:
+  * The correlation between files within the container and their link in the host machine's file system.
+  * Create networks external to the compose.
+  * Create Tokens on Cloudflare.
+* In Authelia we will introduce the **use of secrets** as a security measure for our sensitive data.
+  * We will also learn how to generate strong passwords on a Linux system.
+  * We will see how to run commands within a container that has not yet been started.
+* In Nextcloud we will see a **multi-service compose**:
+  * One container for the application, another one for the relational database and another one for the in-memory database.
+  * The use of `command` as a mean of launching a container always with the same initial conditions.
+* In Crowdsec how to **run commands in a container**:
+  * From outside in our shell and from inside with interactive mode.
+  * We will also look at the use of _plugins_ in Traefik.
+* In OPNdash how to create **preset volumes** in Docker.
+* In Proxmox Backup Server how to **create a preset volume** but have the container see it **as a physical storage device**.
+* And other things I'll think about along the way...
+
+### To-Do List:
 - [x] _Docker Socket Proxy_
 - [x] _Træfik_
 - [x] _Authelia_
-- [ ] Nextcloud ← **Siguiente**
-- [ ] Crowdsec
+- [x] _Nextcloud_
+- [x] _Crowdsec_
 - [ ] Atuin
 - [ ] Cloudflare DDNS
 - [ ] Code Server
-- [ ] Dashy
+- [ ] Dashy *Current WIP*
 - [ ] jDownloader
 - [ ] MariaDB
 - [ ] Minecraft Bedrock Server
@@ -41,32 +68,32 @@
 - [ ] Proxmox Backup Server
 - [ ] Proxmox Dashboard
 
-### Creadores que me han servido de inspiración y material en el que me he apoyado
+### Content creators who inspired me and material in which I've relied
 
-Hoy en día casi todo está inventado. Cada caso es particular y hay que adaptar toda la información que hay en la red a nuestras necesidades. Todo ésto no habría empezado si no fuera por los numerosos expertos que tenemos la suerte de tener hoy en día en la red. Por lo tanto,
+Today almost everything is invented. Each case is unique and you've to adapt all the info on Internet to your needs. I wouldn't have begun if it weren't for the countless gentle experts who we're lucky to have nowadays on Internet. Therefore,
 
-## Gracias infinitas a:
+## Infinite thanks to:
 
 * **Timothy Stewart (Techno Tim)**
-    * __[Página web](https://technotim.live)__
+    * __[Website](https://technotim.live)__
     * __[YouTube](https://www.youtube.com/@technotim)__
 * **Jay LaCroix (Learn Linux TV)**
-    * __[Página web](https://www.learnlinux.tv)__
+    * __[Website](https://www.learnlinux.tv)__
     * __[YouTube](https://www.youtube.com/@LearnLinuxTV)__
 * **Carlos (Computadoras y Sensores)**
     * __[YouTube](https://www.youtube.com/@ComputadorasySensores)__
     * __[Facebook](https://www.facebook.com/ComputadorasySensores)__
 * **Anand (Smart Home Beginner)**
-    * __[Página web](https://www.smarthomebeginner.com)__
+    * __[Website](https://www.smarthomebeginner.com)__
     * __[YouTube](https://www.youtube.com/@AnandsLab)__
 * **Christopher Barnatt (Explaining Computers)**
-    * __[Página web](https://explainingcomputers.com)__
+    * __[Website](https://explainingcomputers.com)__
     * __[YouTube](https://www.youtube.com/@christopherbarnatt)__
-* **La Biblia de Linux**
+* **The Linux de facto Bible**
     * __[Arch Linux Wiki (btw)](https://wiki.archlinux.org/title/Main_page)__ 😎
-* **Documentación online**
+* **Online docs**
     * **[Docker](https://docs.docker.com)**
     * **[Traefik](https://doc.traefik.io/traefik/)**
     * **[Authelia](https://www.authelia.com/overview/prologue/introduction/)**
 
-**A todos y cada uno de los programadores cuyos contenedores he utilizado en mis proyectos. Hay una referencia a su trabajo dentro de cada `README.md`. Gracias por vuestro esfuerzo y a vuestra voluntad de compartir.**
+**To every developer whose containers I've used in my projects. There's a reference to their work within each `README.md`. Thank you all for your effort and willingness to share.**

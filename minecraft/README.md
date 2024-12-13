@@ -1,17 +1,15 @@
 <h1>
   <p align="center" width="100%">
-    </br></br>
-    <img width="50%" src="../.recursos/img/minecraft.png">
-    </br></br></br></br>
+    <img width="80%" src="../.recursos/img/logos/minecraft.png">
+    </br>
     Minecraft Bedrock Server
   </p> 
 </h1>
 
-<h4> 
+<h2> 
   <p align="center" width="100%">
     Containerized Minecraft Bedrock Dedicated Server with selectable version by Geoff Bourne (itzg)
   </p>
-  </br>
-</h4>
+</h2>
 
 ### COMING SOON™
