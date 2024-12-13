@@ -35,7 +35,7 @@ All services are fully functional, but I am aware that there are different (infi
   * Services, networks, volumes and environment variables.
   * The inclusion of `privileged` to create containers with elevated privileges on the host machine.
 * In Traefik we will see the **use of labels** and also:
-  * The correlation between files within the container and their link in the host machine's file system.
+  * The correlation between files within the container and their mount points on the host machine's file system.
   * Create networks external to the compose.
   * Create Tokens on Cloudflare.
 * In Authelia we will introduce the **use of secrets** as a security measure for our sensitive data.
@@ -60,7 +60,7 @@ All services are fully functional, but I am aware that there are different (infi
 - [ ] Atuin
 - [ ] Cloudflare DDNS
 - [ ] Code Server
-- [ ] Dashy *Current WIP*
+- [ ] Dashy ***Current WIP***
 - [ ] jDownloader
 - [ ] MariaDB
 - [ ] Minecraft Bedrock Server
