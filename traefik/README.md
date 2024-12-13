@@ -100,8 +100,8 @@ Finally write the path to the file inside `middlewares.yml`:
 http:
   middlewares:
     middlewares-basic-auth:
-     basicAuth:
-       usersFile: "/path/secure/file/.users"
+      basicAuth:
+        usersFile: "/path/secure/file/.users"
 ```
 
 ### *Other remarks*
