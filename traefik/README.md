@@ -79,7 +79,7 @@ Services often use the same middlewares over and over again. A chain is a way of
 
 ### *Basic authentication (for now)*
 
-We are not going to expose our traefik panel to anyone, so for now and until we set up a better authentication system ([Authelia](../authelia/)), we are going to use basic authentication.
+We are not going to expose our traefik dashboard to anyone, so for now and until we set up a better authentication system ([Authelia](../authelia/)), we are going to use basic authentication.
 
 We are going to create a file in a safe place with a username:password pair inside. If we want to add more users then write a line for each one.
 
