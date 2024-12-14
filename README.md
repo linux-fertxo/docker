@@ -2,9 +2,9 @@
     <p align="center" width="100%">
         <img width="60%" src=".recursos/img/logos/linuxfertxo.png">
         </br>
-        My Docker services for Homelab
+        My Docker services for Homelabbing
         <h2><p align="center">
-            A commented⁽¹⁾ selection of containers that I hope will inspire your projects
+            A commented⁽¹⁾ selection of stacks that I hope will inspire your projects
         </h2>
         <h5>
             ⁽¹⁾ Note: All README have english translation, but comments inside individual files are only in Spanish at the moment.
