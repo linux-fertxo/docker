@@ -23,7 +23,8 @@ entryPoints:
         certResolver: dns-cloudflare                                        # Nombre del bloque que buscará después certificatesResolvers.
         domains:
           - main: ejemplo.com                                               # Ajustar el dominio.
-          - sans: "*.ejemplo.com"                                           # Ajustar el dominio.
+          - sans: 
+            - "*.ejemplo.com"                                               # Ajustar el dominio.
     forwardedHeaders:
       trustedIPs:
         # BLOQUE DE IPs DE CLOUDFLARE (Si usamos Cloudflare)                [IPs de Cloudflare: https://www.cloudflare.com/ips/]
