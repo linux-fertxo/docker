@@ -82,7 +82,7 @@ Today almost everything is invented. Each case is unique and you've to adapt all
     * __[YouTube](https://www.youtube.com/@LearnLinuxTV)__
 * **Carlos (Computadoras y Sensores)**
     * __[YouTube](https://www.youtube.com/@ComputadorasySensores)__
-    * __[Facebook](https://www.facebook.com/ComputadorasySensores)__
+    * __[Github](https://github.com/computadorasysensores)__
 * **Anand (Smart Home Beginner)**
     * __[Website](https://www.smarthomebeginner.com)__
     * __[YouTube](https://www.youtube.com/@AnandsLab)__

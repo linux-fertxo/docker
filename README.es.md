@@ -79,7 +79,7 @@ Hoy en día casi todo está inventado. Cada caso es particular y hay que adaptar
     * __[YouTube](https://www.youtube.com/@LearnLinuxTV)__
 * **Carlos (Computadoras y Sensores)**
     * __[YouTube](https://www.youtube.com/@ComputadorasySensores)__
-    * __[Facebook](https://www.facebook.com/ComputadorasySensores)__
+    * __[Github](https://github.com/computadorasysensores)__
 * **Anand (Smart Home Beginner)**
     * __[Página web](https://www.smarthomebeginner.com)__
     * __[YouTube](https://www.youtube.com/@AnandsLab)__
