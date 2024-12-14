@@ -119,11 +119,11 @@ docker run authelia/authelia:latest authelia crypto hash generate argon2 --passw
 
 Replace PASSWORD with your real password and cut from the first `$` symbol till the end of the line and paste it within the `""` in the `password:` block.
 
-> **Tip**: If we put a space before the whole command we will be telling the Shell not to store the line in the history.*** 😎
+> **Tip**: If we put a space before the whole command we will be telling the Shell not to store the line in the history. 😎
 
 ### *Other remarks*
 
-Inside the `redis/` folder some files will be generated that we don't really have to do anything with. You can create a docker volume instead of a bind mount.
+Inside the `redis/` folder some files will be generated that we don't really have to do anything with. You can create a docker volume instead of a bind mount if you do prefer so.
 
 The service is based on Traefik, although it can be adapted to other reverse proxies.
 
@@ -131,7 +131,7 @@ The service is based on Traefik, although it can be adapted to other reverse pro
 
 * `PUID` and `PGID` are the user and group IDs in numeric format (run `id` to find them)
 * `TZ` is the time zone in `Continent/City` format. [List of zones](https://www.joda.org/joda-time/timezones.html)
-* `DOCKERDIR` is the parent directory containing all Docker services.
+* `DOCKERDIR` is the root directory containing all Docker services.
 * `DOMAINNAME` is the name of our domain.
 
 ### *Before start*
@@ -147,7 +147,7 @@ The `traefik` container must be up and running beforehand.
 ## First run and device register
 
 ```bash
-docker compose up -d      → run Authelia in the background
+docker compose up -d      → run Authelia in dettached mode (background)
 
 docker logs authelia -f   → examine the logs to see if there are any problems (CTRL+c to exit)
 ```

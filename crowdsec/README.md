@@ -28,7 +28,7 @@ Crowdsec is a system that detects and blocks unwanted access attempts at various
   - [*Files*](#files)
   - [*Traefik's modifications*](#traefiks-modifications)
   - [*Collections*](#collections)
-  - [*Sorry... The command `what`?*](#sorry-the-command-what)
+  - [*Sorry... The `what` command?*](#sorry-the-what-command)
   - [*Environment variables*](#environment-variables)
   - [*Before starting*](#before-starting)
 - [First run and initial configuration](#first-run-and-initial-configuration)
@@ -65,23 +65,23 @@ Crowdsec is divided into several components. Although the explanation of each on
   * **Decisions**: They are the consequence that is triggered when a certain number of alerts is received.
 * **Remediation components**: Commonly known as *"bouncers"*, they are responsible for executing the decisions.
 * **Central API (CAPI)**: The interface on Crowdsec's servers that centralizes data from "bad actors" and distributes it among its users. In addition we will have access to the...
-* **Console**: From here we can manage our machines, block lists and alerts among many other features through the online platform.
+* **Console**: From here we can manage our machines, block lists and alerts among many other features through the platform.
   
-What makes Crowdsec so powerful is that it **leverages the community to share data about "bad actors"** among its users. This way, we can **prevent an attack before it even happens** and bypass the entire process described above.
+What makes Crowdsec so powerful is that it **leverages the community to share data about "bad actors"** among its users. This way, we can **prevent an attack before it even happens** bypassing the entire process described above.
 
 ### *Files*
 
-As usual, both `docker-compose.yml` and `.env` need no introduction. They are the files that contain all the instructions and variables to create the Crowdsec container.
+As usual, both `docker-compose.yml` and `.env` need no introduction. These are the files that contain all the instructions and variables to create the Crowdsec container.
 
 The `cs-private-key` file contains the *token* for the bouncer. This random code is required to link the Traefik plugin to this service. It's empty for the moment because we need to generate it once we have started the container.
 
->**THIS METHOD IS NOW DEPRECATED, BUT I'LL KEEP THE EXPLANATION AS IT'S ALMOST THE SAME BUT CHANGING ONE CENTRALIZED FILE FOR SEVERAL FILES PLUS A FOLDER**
-The file that defines where are the logs and of which type they are is `acquis.yaml` **(note the extension `.yaml` and not `.yml`)**. Here we tell Crowdsec which services' logs we want to be analyzed. They must be previously mounted as volume in `docker-compose.yml`, so they can be read from within the container.
+>**THIS METHOD IS NOW DEPRECATED, BUT I'LL KEEP THE EXPLANATION AS IT'S ALMOST THE SAME BUT CHANGING ONE CENTRALIZED FILE FOR SEVERAL FILES INSIDE A FOLDER**
+The file that defines where the logs are and of which type is `acquis.yaml` **(note the extension `.yaml` and not `.yml`)**. Here we tell Crowdsec which services' log files we want to be analyzed. They must be previously mounted as volumes in `docker-compose.yml`, so they can be read from within the container.
 The structure of `acquis.yaml` is divided in a `filenames` section with the logs to be analyzed (one or more files) and a `labels` section, where we specify what type of data is expected in them, so the Security Engine can send them to the appropriate parser.
 
 Instead of `acquis.yaml`, the `acquis.d/` folder is now used. Inside we create a file for each service we want to parse. These files' structure is exactly the same as explained above, but for one single service.
 
->**Note**: **In most cases, passing only the Traefik logs is more than enough**. We can still pass the Nginx, Apache, Nextcloud, etc. logs to improve detection. But this has a computational cost, so we have to take into account the increase in CPU and memory usage. Some examples (commented out) of services seen here are already in `docker-compose.yml` and `acquis.d/`
+>**Note**: **In most cases, parsing only the Traefik logs is more than enough**. We can still pass the Nginx, Apache, Nextcloud, etc. logs to improve detection. But this has a computational cost, so we have to take into account the increase in CPU and memory usage. Some examples (commented out) of services are already in `docker-compose.yml` and `acquis.d/`
 
 **In brief:**
 
@@ -93,11 +93,11 @@ Instead of `acquis.yaml`, the `acquis.d/` folder is now used. Inside we create a
 
 Some modifications need to be made to Traefik so that it works in coordination with Crowdsec. In this repository you can find [a section dedicated to Traefik](../traefik/). In that example, both `docker-compose.yml`, `traefik.yml`, `middlewares.yml` and `middlewares-chains.yml` have all the necessary lines, but commented out. You just have to uncomment them and restart Traefik to take effect.
 
-In other existing guides I've hit on Internet, it's common to find Crowdsec service together with [Traefik-Crowdsec-Bouncer](https://github.com/fbonalair/traefik-crowdsec-bouncer) by [Fabien Bonalair](https://github .com/fbonalair), as an additional service within `docker-compose.yml`. However, at the time of writing this guide, this container has not been updated for 2+ years and since then there are new features (such as support for AppSec), so in this case we will use the [Crowdsec-Bouncer-Traefik-Plugin](https://github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin) plugin by [maxlerebourg](https://github.com/maxlerebourg). **From here, my most sincere thanks to both of them for their work.**
+In other existing guides I've hit on Internet, it's common to find Crowdsec service together with [Traefik-Crowdsec-Bouncer](https://github.com/fbonalair/traefik-crowdsec-bouncer) by [Fabien Bonalair](https://github.com/fbonalair), as an additional service in `docker-compose.yml`. However, at the time of writing this guide, this container has not been updated for 2+ years and since then there are new features (such as support for AppSec), so in this case we will use the [Crowdsec-Bouncer-Traefik-Plugin](https://github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin) plugin by [maxlerebourg](https://github.com/maxlerebourg). **From here, my most sincere thanks to both of them for their work.**
 
 The most notable difference between the two *bouncers* is that the plugin is defined inside Traefik's static configuration file (`traefik.yml`) and not as another service in `docker-compose.yml`, so there's no need to spin up any additional containers alongside Crowdsec.
 
->If we are also users of **Cloudflare proxy** (the famous orange cloud), we also take the opportunity to introduce [Real IP from Cloudflare Proxy/Tunnel](https://plugins.traefik.io/plugins/62e97498e2bf06d4675b9443/real-ip-from-cloudflare-proxy-tunnel) *plugin* from [BetterCorp](https://github.com/BetterCorp) **(also thanks to BetterCorp from here)**, which allows us to pass the real IP from the requester.
+>If we are also users of **Cloudflare proxy** (the famous orange cloud), we also take this opportunity to introduce [Real IP from Cloudflare Proxy/Tunnel](https://plugins.traefik.io/plugins/62e97498e2bf06d4675b9443/real-ip-from-cloudflare-proxy-tunnel) *plugin* from [BetterCorp](https://github.com/BetterCorp) **(also thanks to BetterCorp from here)**, which allows us to pass the real IP from the requester.
 >Actually this is **not necessary for Crowdsec**, since Traefik is able to write the real IP in its access log, but **other services that we use** later (and that do not have to access log files) **will indeed need it**. Also, it doesn't hurt anyone, so we leave it on. 😎👍
 
 In `traefik.yml` uncomment the following block:
@@ -138,29 +138,29 @@ And in `middlewares.yml` uncomment the following:
 ```
 >
 
->We can adjust each parameter to our needs (there are many more, see the Crowdsec documentation). The last three lines allow trusting the two shown example local networks. They are completely optional.
+>We can adjust each parameter to our needs (there are many more, see the Plugin documentation). The last three lines allow trusting the two shown example local networks. They are completely optional.
 
-In `middlewares-chains.yml` uncomment the line corresponding to Crowdsec for each block. They are the sigle lines commented out, you can't miss them.
+In `middlewares-chains.yml` uncomment the line corresponding to Crowdsec for each block. They are the single lines commented out, you can't miss them.
 
-Finally, **totally optional but highly recommended**, is to configure the Traefik container with a **fixed IP**. This is because every time we restart and Docker assigns Traefik a different IP than any previous one, Crowdsec will generate a new bouncer (with the same name and the @IP as a suffix) and then an unreal number of items will be shown in the web console. I recognize that this change is more aesthetic than practical, since it will still fulfill its purpose, but I like to have everything tidy. 😎
+Finally, **totally optional but highly recommended**, is to start the Traefik container with a **fixed IP**. *Why?* may you ask... Well, because every time we restart and Docker assigns Traefik a different IP than any previous one, Crowdsec will generate a new bouncer (with the same name and @IP as a suffix) and then an unreal number of items will be shown in the web console. I recognize this change is more aesthetic than practical, since it will still do the thing, but I like to have everything tidy. 😎
 
-To do this, just uncomment the corresponding lines in `docker-compose.yml` (lines 7-10,26,27) **and adjust both the range of the networks block and the IP of the traefik service to the ones we have in our environment.**
+To do this, just uncomment the corresponding lines in `docker-compose.yml` (lines 7-10,26,27) **and adjust both the range of the networks block and the IP of the traefik service to the ones you have in your environment.**
 
 ### *Collections*
 
-All this theory is very interesting, but we have so many terms that this give the impression of being a very complicated thing to set up. With parsers, scenarios, bouncers and so on, it's normal that everything seems very confusing.
+All this ~~wordwall~~ theory is very ~~exasperating~~ interesting, but we have so many terms that this give the impression of being a very complicated thing to set up. With parsers, scenarios, bouncers and so on, it's normal that everything seems very confusing.
 
 **But here comes another concept to our rescue 🤣 : [collections](https://app.crowdsec.net/hub/collections)**. Fortunately these will make us forget all the other terms, at least in the practical part. Let me explain:
 
-> ***A collection is the set of parsers, scenarios and the way in which they are all work coherently for a specific use case.***
+> ***A collection is the set of parsers, scenarios and the way in which they work coherently for a specific use case.***
 
-This way, instead of having to worry about the details of each component, we can download a **"pack"**. Each pack takes care of everything necessary to analyze and make decisions against unwanted access attempts on the application it's aimed at: Wordpress, Nextcloud, Windows operating system... What's more, we can download as many collections as we want in the same Security Engine **always within a logic**. It makes no sense to install a collection to protect the admin panel of a Mikrotik router if we have a one with OPNsense.
+This way, instead of having to worry about the details of each component, we can install a **"pack"**. Each pack takes care of everything necessary to analyze and make decisions against unwanted access attempts on the application it's aimed at: Wordpress, Nextcloud, Windows operating system... What's more, we can install as many collections as we want in the same Security Engine **always within a logic**. It makes no sense to install a collection to protect the admin dashboard of a Mikrotik router if we have one with OPNsense.
 
 In the current case, and to be brief, we'll download the basic collections for the Linux system, some common for http services and Traefik. We can do this either as an environment variable in `docker-compose.yml` (the minimal ones are already selected) or by running **the `cscli` command** once the container is up and running.
 
-### *Sorry... The command `what`?*
+### *Sorry... The `what` command?*
 
-The most significant command in Crowdsec is `cscli` (CrowdSec Command Line Interface). It is our way of interacting with it locally. It has a large number of options that we won't cover here, so we'll focus on the most common ones:
+The most significant command in Crowdsec is `cscli` (CrowdSec Command Line Interface). It's our way of interacting Crowdsec locally. It has a large number of options that we won't cover here, so we'll focus on the most common ones:
 
   * `cscli bouncers`   : To list, add or remove bouncers.
   * `cscli collections`: Same as above but for collections.
@@ -176,12 +176,12 @@ docker exec <container> <command>
 ```
 >
 
->Where `<container>` is the name of the container and `<command>` is what we want to be executed inside.
+>Where `<container>` is the name of the container and `<command>` is what we want to be run inside.
 
 * **From inside the container, if we have to execute multiple tasks**
 ```bash
 docker exec -it <container> /bin/sh
-# (in some cases /bin/bash can also be used)
+# (in some cases /bin/bash can also be used, depends on container build)
 ```
 >
 
@@ -191,7 +191,7 @@ docker exec -it <container> /bin/sh
 
 Only one:
 
-* `DOCKERDIR` as always, the root folder of all our Docker services.
+* `DOCKERDIR`: the root folder of our Docker services, as always.
 
 ### *Before starting*
 
@@ -201,7 +201,7 @@ Only one:
 ## First run and initial configuration
 
 ```bash
-docker compose up -d       → run Crowdsec in dettached mode
+docker compose up -d       → run Crowdsec in dettached mode (background)
 
 docker logs crowdsec -f    → look at the logs to find any issues (CTRL+c para salir)
 ```
@@ -221,13 +221,13 @@ docker restart traefik crowdsec
 ```
 >
 
-Again, allow a few minutes until all is properly restarted. In the `crowdsec` log we'll start to see interesting things:
+Again, allow a few minutes until all is properly settled down. In the `crowdsec` log we'll start to see interesting things:
 
     ..."loading acquisition file : /etc/crowdsec/acquis.d/traefik.yaml"
     ..."Adding file /var/log/traefik.log to datasources" type=file
 >
 
-We can check if it has recognized the bouncer (it's possible that not all the followinf information appear during the first few minutes):
+We can check if it has recognized the bouncer (it's possible that all the following information won't appear during the first few minutes):
 ```bash
 docker exec crowdsec cscli bouncers list
 ----------------------------------------------------------------------------------------------------------------
@@ -238,20 +238,20 @@ docker exec crowdsec cscli bouncers list
 ```
 >
 
-Let's add an example collection for one of the services discussed throughout the document, ***Nextcloud***
+Let's add an example collection for one of the services referenced throughout the document, ***Nextcloud***
 ```bash
 docker exec crowdsec cscli collections install nextcloud
 ```
 >
 
 
-Finally, go to the Crowdsec console (https://app.crowdsec.net), click on the ***Sign up for free*** button and create an account.
+Finally, go to the [Crowdsec console](https://app.crowdsec.net), click on the ***Sign up for free*** button and create an account.
 In ***Security Engines → Engines*** section, click on ***Add Security Engine***.
-Two blocks of info will be shown: the first one with links to configure a Security Engine according to the Operating System (we have already done this), and the second one where it says: ***Enroll your CrowdSec Security Engine:***
+Two blocks of info will be shown: the first one with links to configure a Security Engine according to the Operating System (we've already done this), and the second one ***Enroll your CrowdSec Security Engine:***, where it is shown a line with an alphanumeric string.
 
     sudo cscli console enroll -e context blahblahblahblahblahblah
 
-Copy the command and paste it into the terminal. It will respond something like
+Copy that command and paste it into the terminal. It will respond something like
 
 ```bash
 INFO[2024-12-12T19:50:17Z] manual set to true
@@ -270,10 +270,12 @@ Done! We now have an extra layer of security in our services supported by a grea
 
 ## EXTRA - Post installation
 
-Crowdsec offers remarkable protection with the free account. To get the most out of it, you can subscribe to up to three additional lists from the ***Blocklists*** section: filter by ***Free***, choose the one you like best, and inside there is a ***Security Engines*** section. Here you can add your newly created Security Engine, being mandatory to choose what behavior we want the bouncer to have in the event of a positive entry from the blocklist: Ban, present a Captcha or custom (advanced).
+Crowdsec offers remarkable protection with the free account. To get the most out of it, you can subscribe to up to three additional lists from the ***Blocklists*** section: filter by ***Free***, choose the ones you like best, and inside there's a ***Security Engines*** section. Here you can add your newly created Security Engine, being mandatory to choose what behavior we want the bouncer to have in the event of a positive entry from the blocklist: Ban, present a Captcha or custom (advanced).
 
-We can perform this operation with up to two more blocklists. The three lists we choose are associated with the account and not the Engine, so if we register more Engines they will have to use the same three lists. Although they can be changed at any time, ideally, if we are going to make intensive use we should consider acquiring a subscription. It has many benefits other than the quantity and quality of the block lists.
+We can perform this operation with two more blocklists. The three lists we choose are associated with the account and not the Engine, so if we register more Engines they will have the same three blocklists.
 
-***Furthermore, if the central server (CAPI) receives our data periodically, Crowdsec will assign us a fourth list, Crowdsec Community Blocklist.***
+>Furthermore, if the central server (CAPI) receives our data periodically, Crowdsec will assign us a fourth list, Crowdsec Community Blocklist.
+
+Although they can be changed at any time, if you are going to make intensive use of it consider acquiring a subscription. It has many benefits other than the quantity and quality of the block lists.
 
 And that's it for today. See you at the next service!

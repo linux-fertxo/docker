@@ -8,7 +8,7 @@
 
 <h2> 
   <p align="center" width="100%">
-    Dynamic DNS (DDNS) is a service that keeps the DNS updated with a web property's correct IP address, even if that IP address is constantly being updated.
+    Dynamic DNS (DDNS) is a service that keeps DNS A records updated with server actual IP address, even if that IP address is constantly being updated.
   </p>
 </h2>
 
