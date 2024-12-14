@@ -29,7 +29,7 @@
 
 ### What can I learn here?
 
-All services are fully functional, but I am aware that there are different (infinite) ways to approach each one. Although all of them could be improved, I have tried to make each one have at least one new technique that we can apply in other contexts.
+All services are fully functional, but I am aware that there are different (infinite) ways to approach each one. Although all of them could be improved, I tried that each one have at least one new technique that we can apply in other contexts.
 
 * In Socket Proxy we will see the **general structure of a docker-compose**:
   * Services, networks, volumes and environment variables.
