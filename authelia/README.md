@@ -85,6 +85,8 @@ How do we generate them? We have plenty options from the Linux shell:
   docker run --rm authelia/authelia:latest authelia crypto rand --length 64 --charset alphanumeric
 # Without any type of tool installed:
   date +%s | sha256sum | base64 | head -c 64 ; echo
+  tr -dc A-Za-z0-9 </dev/urandom | head -c 64
+  xxd -l 32 -c 32 -p < /dev/random
 ```
 >
 
