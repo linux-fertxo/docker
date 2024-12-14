@@ -18,7 +18,7 @@
 
 * Each service has its own folder and `README.md`. Check out each one to better understand how they work.
 * They can be run from CLI or be imported to Portainer, Dockge...
-* Although they can be deployed at any time, it's interesting to deploy the following containers in this order because there are dependencies on each other:
+* Although they can be deployed at any time, it's interesting to follow this order to fulfill dependencies:
 
       1. Socket Proxy
       3. Traefik 
