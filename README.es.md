@@ -41,6 +41,7 @@ Todo los servicios son completamente funcionales, pero soy consciente de que exi
 * En Nextcloud veremos un **compose multiservicio**:
   * Un contenedor para la aplicación, otro para la base de datos relacional y otro para la base de datos en memoria.
   * El uso de `command` como medio de levantar un contenedor siempre con unas mismas condiciones iniciales.
+* En Dashy crearemos un chequeo de salud para el contenedor.
 * En Crowdsec cómo **ejecutar comandos en un contenedor**:
   * Desde fuera en nuestro shell y desde dentro con el modo interactivo.
   * Veremos también el uso de _plugins_ en Traefik.

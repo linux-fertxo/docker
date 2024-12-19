@@ -25,7 +25,7 @@
 </h3>
 
 - [Structure](#structure)
-- [Explanation](#explanation)
+- [Description](#description)
   - [*Other remarks*](#other-remarks)
   - [*Environment Variables*](#environment-variables)
   - [*Before starting*](#before-starting)
@@ -44,7 +44,7 @@
       └─ redis/
            └─ sysctl.conf                 → redis configuration (see below)
 
-## Explanation
+## Description
 
 The `docker-compose.yml` and `.env` files, as always, need no introduction. These are the files that contain all the instructions and variables to create the Nextcloud container.
 

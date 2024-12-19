@@ -47,6 +47,7 @@ All services are fully functional, but I am aware that there are different (infi
 * In Crowdsec how to **run commands in a container**:
   * From outside in our shell and from inside with interactive mode.
   * We will also look at the use of _plugins_ in Traefik.
+* In Dashy we'll setup a healthcheck for our container.
 * In OPNdash how to create **preset volumes** in Docker.
 * In Proxmox Backup Server how to **create a preset volume** but have the container see it **as a physical storage device**.
 * And other things I'll think about along the way...

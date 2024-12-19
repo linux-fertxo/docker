@@ -18,14 +18,14 @@
   </p>
 </h3>
 
-[![Static Badge](https://img.shields.io/badge/lang-%F0%9F%87%AA%F0%9F%87%B8_es-blue?style=plastic)](README.md)
+[![Static Badge](https://img.shields.io/badge/lang-%F0%9F%87%AA%F0%9F%87%B8_es-blue?style=plastic)](README.es.md)
 
 <h3>
   Content:
 </h3>
 
 - [Structure](#structure)
-- [Explanation](#explanation)
+- [Description](#description)
   - [*Authelia config*](#authelia-config)
   - [*User config*](#user-config)
   - [*Other remarks*](#other-remarks)
@@ -51,7 +51,7 @@
       │         └─ authelia_session_redis_password
       └─ redis/                           → Redis server data
 
-## Explanation
+## Description
 
 Authelia config can be very complex. Here we've chosen a simple approach that will work for one user or a few of them. For more advanced options we will have to refer to the [official Authelia documentation](https://www.authelia.com/configuration/prologue/introduction/).
 

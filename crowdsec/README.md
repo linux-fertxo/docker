@@ -23,7 +23,7 @@ Crowdsec is a system that detects and blocks unwanted access attempts at various
 </h3>
 
 - [Structure](#structure)
-- [Explanation](#explanation)
+- [Description](#description)
   - [*How does Crowdsec work?*](#how-does-crowdsec-work)
   - [*Files*](#files)
   - [*Traefik's modifications*](#traefiks-modifications)
@@ -44,7 +44,7 @@ Crowdsec is a system that detects and blocks unwanted access attempts at various
            ├─ traefik.yaml                → Traefik service configuration
            └─ other services...
 
-## Explanation
+## Description
 
 ### *How does Crowdsec work?*
 </br>

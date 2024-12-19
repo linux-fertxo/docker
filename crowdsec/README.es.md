@@ -24,7 +24,7 @@
 </h3>
 
 - [Estructura](#estructura)
-- [Explicación](#explicación)
+- [Descripción](#descripción)
   - [*¿Cómo funciona Crowdsec?*](#cómo-funciona-crowdsec)
   - [*Archivos*](#archivos)
   - [*Modificaciones en Traefik*](#modificaciones-en-traefik)
@@ -45,7 +45,7 @@
            ├─ traefik.yaml                → configuración para el servicio Traefik
            └─ otros servicios...
 
-## Explicación
+## Descripción
 
 ### *¿Cómo funciona Crowdsec?*
 </br>

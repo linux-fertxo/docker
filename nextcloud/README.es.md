@@ -24,7 +24,7 @@
 </h3>
 
 - [Estructura](#estructura)
-- [Explicación](#explicación)
+- [Descripción](#descripción)
   - [*Otras observaciones*](#otras-observaciones)
   - [*Variables de entorno*](#variables-de-entorno)
   - [*Antes de empezar*](#antes-de-empezar)
@@ -43,7 +43,7 @@
       └─ redis/
            └─ sysctl.conf                 → configuración de redis (ver más adelante)
 
-## Explicación
+## Descripción
 
 Los archivos `docker-compose.yml` y `.env` como siempre no necesitan presentación, son los archivos que contienen todas las instrucciones y variables para crear el contenedor de Nextcloud.
 

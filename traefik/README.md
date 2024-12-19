@@ -25,7 +25,7 @@
 </h3>
 
 - [Structure](#structure)
-- [Explanation](#explanation)
+- [Description](#description)
 	- [*Wait... What is a Middleware?*](#wait-what-is-a-middleware)
 	- [*And a chain?*](#and-a-chain)
 	- [*Basic authentication (for now)*](#basic-authentication-for-now)
@@ -52,7 +52,7 @@
 	       ├─ middlewares-chains.yml          → chained middlewares (see below)
 	       └─ tls-opts.yml                    → TLS options
 
-## Explanation
+## Description
 
 The `docker-compose.yml` and `.env` files need no introduction, these are the files that contain all the instructions and variables to create the Traefik container.
 

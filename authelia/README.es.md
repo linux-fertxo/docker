@@ -25,7 +25,7 @@
 </h3>
 
 - [Estructura](#estructura)
-- [Explicación](#explicación)
+- [Descripción](#descripción)
   - [*Configuración de Authelia*](#configuración-de-authelia)
   - [*Configuración de usuarios*](#configuración-de-usuarios)
   - [*Otras observaciones*](#otras-observaciones)
@@ -51,7 +51,7 @@
       │         └─ authelia_session_redis_password
       └─ redis/                           → datos del servidor redis
 
-## Explicación
+## Descripción
 
 La configuración de Authelia puede llegar a ser muy complicada. Aquí se ha optado por una forma sencilla que resulta válida para uno o unos pocos usuarios. Para otras opciones más complejas nos tendremos que remitir a la [documentación oficial de Authelia](https://www.authelia.com/configuration/prologue/introduction/).
 
