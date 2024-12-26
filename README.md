@@ -58,10 +58,10 @@ All services are fully functional, but I am aware that there are different (infi
 - [x] _Authelia_
 - [x] _Nextcloud_
 - [x] _Crowdsec_
+- [x] _Dashy_
 - [ ] Atuin
 - [ ] Cloudflare DDNS
 - [ ] Code Server
-- [ ] Dashy ***Current WIP***
 - [ ] jDownloader
 - [ ] MariaDB
 - [ ] Minecraft Bedrock Server

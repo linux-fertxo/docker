@@ -55,10 +55,10 @@ Todo los servicios son completamente funcionales, pero soy consciente de que exi
 - [x] _Authelia_
 - [x] _Nextcloud_
 - [x] _Crowdsec_
+- [x] _Dashy_
 - [ ] Atuin
 - [ ] Cloudflare DDNS
 - [ ] Code Server
-- [ ] Dashy *Trabajo en progreso actual*
 - [ ] jDownloader
 - [ ] MariaDB
 - [ ] Minecraft Bedrock Server
