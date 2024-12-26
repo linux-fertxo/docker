@@ -8,7 +8,10 @@
 
 <h2> 
   <p align="center" width="100%">
-    Un excepcional panel de control con widgets, verificaciones de estado y un completo editor visual con infinitas (<i class="fa-brands fa-js"></i>) posibilidades
+    Un excepcional panel de control con widgets, verificaciones de estado y un completo editor visual con infinitas⁽¹⁾ posibilidades
+      <h5>
+        ⁽¹⁾ JavaScript 😎
+      </h5>
   </p>
 </h2>
 

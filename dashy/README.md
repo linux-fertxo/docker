@@ -8,7 +8,10 @@
 
 <h2> 
   <p align="center" width="100%">
-    An outstanding dashboard with widgets, status-checks, and a full WYSIWYG editor with infinite (<i class="fa-brands fa-js"></i>) posibilities
+    An outstanding dashboard with widgets, status-checks, and a full WYSIWYG editor with infinite⁽¹⁾ posibilities
+      <h5>
+        ⁽¹⁾ JavaScript 😎
+      </h5>
   </p>
 </h2>
 
