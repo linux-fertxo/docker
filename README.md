@@ -21,10 +21,11 @@
 * Although they can be deployed at any time, it's interesting to follow this order to fulfill dependencies:
 
       1. Socket Proxy
-      3. Traefik 
-      4. Authelia
-      5. Nextcloud
-      6. Crowdsec
+      2. Traefik 
+      3. Authelia
+      4. Nextcloud
+      5. Crowdsec
+      6. MariaDB
       7. Any other container with Traefik labels
 
 ### What can I learn here?
