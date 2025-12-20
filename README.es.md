@@ -56,6 +56,7 @@ Todo los servicios son completamente funcionales, pero soy consciente de que exi
 - [x] _Nextcloud_
 - [x] _Crowdsec_
 - [x] _Dashy_
+- [x] Proxmox Dashboard
 - [ ] Atuin
 - [ ] Cloudflare DDNS
 - [ ] Code Server
@@ -64,7 +65,6 @@ Todo los servicios son completamente funcionales, pero soy consciente de que exi
 - [ ] Minecraft Bedrock Server
 - [ ] OPNSense Dashboard
 - [ ] Proxmox Backup Server
-- [ ] Proxmox Dashboard
 
 ### Creadores de contenido que me han servido de inspiración y material en el que me he apoyado
 

@@ -60,6 +60,7 @@ All services are fully functional, but I am aware that there are different (infi
 - [x] _Nextcloud_
 - [x] _Crowdsec_
 - [x] _Dashy_
+- [x] Proxmox Dashboard
 - [ ] Atuin
 - [ ] Cloudflare DDNS
 - [ ] Code Server
@@ -68,7 +69,6 @@ All services are fully functional, but I am aware that there are different (infi
 - [ ] Minecraft Bedrock Server
 - [ ] OPNSense Dashboard
 - [ ] Proxmox Backup Server
-- [ ] Proxmox Dashboard
 
 ### Content creators who inspired me and material in which I've relied
 
