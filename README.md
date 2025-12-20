@@ -12,7 +12,7 @@
     </p> 
 </h1>
 
-[![Static Badge](https://img.shields.io/badge/lang-%F0%9F%87%AA%F0%9F%87%B8_es-blue?style=plastic)](README.es.md)
+<!-- [![Static Badge](https://img.shields.io/badge/lang-%F0%9F%87%AA%F0%9F%87%B8_es-blue?style=plastic)](README.es.md) -->
 
 ### Repository structure:
 
@@ -21,12 +21,12 @@
 * Although they can be deployed at any time, it's interesting to follow this order to fulfill dependencies:
 
       1. Socket Proxy
-      2. Traefik 
-      3. Authelia
-      4. Nextcloud
-      5. Crowdsec
-      6. MariaDB
-      7. Any other container with Traefik labels
+      3. Traefik 
+      4. Authelia
+      5. Nextcloud
+      6. Crowdsec
+      7. MariaDB (Some containers depend on it)
+      8. Any other container with Traefik labels
 
 ### What can I learn here?
 

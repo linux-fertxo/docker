@@ -1,0 +1,54 @@
+#============================================================================= REDES
+
+networks:
+  proxdash:
+    name: proxdash
+    driver: bridge
+
+#============================================================================= SERVICIOS
+
+services:
+
+  #--------------------------------------------------------------------------- InfluxDB
+  prox-influxdb:
+    container_name: prox-influxdb
+    hostname: prox-influxdb
+    image: influxdb:2.7.11
+    ports:
+      - '5086:8086'
+    volumes:
+      - $DOCKERDIR/proxdash/influxdb/data:/var/lib/influxdb2
+      - $DOCKERDIR/proxdash/influxdb/config:/etc/influxdb2
+    environment:
+      # Zonas: https://www.joda.org/joda-time/timezones.html
+      - TZ=$TZ
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=$INF_ADMIN_USERNAME
+      - DOCKER_INFLUXDB_INIT_PASSWORD=$INF_ADMIN_PASSWORD
+      - DOCKER_INFLUXDB_INIT_ORG=$INF_ORG_NAME
+      - DOCKER_INFLUXDB_INIT_BUCKET=$INF_BUCKET_NAME
+    restart: "unless-stopped"
+    networks:
+      - proxdash
+
+  #--------------------------------------------------------------------------- Grafana
+  prox-grafana:
+    container_name: prox-grafana
+    hostname: prox-grafana
+    image: grafana/grafana:11.5.2
+    ports:
+      - '5050:3000'
+    volumes:
+      - $DOCKERDIR/proxdash/grafana/data:/var/lib/grafana
+    depends_on:
+      - prox-influxdb
+    environment:
+      # Zonas: https://www.joda.org/joda-time/timezones.html
+      - TZ=$TZ
+      # Acceso:
+      - GF_SECURITY_ADMIN_USER=$GF_SECURITY_ADMIN_USER
+      - GF_SECURITY_ADMIN_PASSWORD=$GF_SECURITY_ADMIN_PASSWORD
+    restart: "unless-stopped"
+    networks:
+      - proxdash
+
