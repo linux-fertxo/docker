@@ -274,7 +274,7 @@ Crowdsec offers remarkable protection with the free account. To get the most out
 
 We can perform this operation with two more blocklists. The three lists we choose are associated with the account and not the Engine, so if we register more Engines they will have the same three blocklists.
 
->Furthermore, if the central server (CAPI) receives our data periodically, Crowdsec will assign us a fourth list, Crowdsec Community Blocklist.
+>Furthermore, if the central server (CAPI) receives our data periodically, Crowdsec will assign us a fourth list, Crowdsec Community Blocklist, for free.
 
 Although they can be changed at any time, if you are going to make intensive use of it consider acquiring a subscription. It has many benefits other than the quantity and quality of the block lists.
 
