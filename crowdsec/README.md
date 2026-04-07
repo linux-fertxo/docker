@@ -62,7 +62,7 @@ Crowdsec is divided into several components. Although the explanation of each on
   * **Local API (LAPI)**: This is an interface that sends alerts and decisions to a database. Once there, it allows the *bouncers* to use them.
   * **Parsers**: They are responsible for reading a specific log and "understanding" what is written in them. There's practically a parser for each type of service/application.
   * **Scenarios**: When the parser finds a known suspicious pattern, it's compared with the scenarios we have installed. If there's a match, an alert is sent to the local API.
-  * **Decisions**: They are the consequence that is triggered when a certain number of alerts is received.
+  * **Decisions**: These are the consequences that will be triggered when a certain number of alerts is received.
 * **Remediation components**: Commonly known as *"bouncers"*, they are responsible for executing the decisions.
 * **Central API (CAPI)**: The interface on Crowdsec's servers that centralizes data from "bad actors" and distributes it among its users. In addition we will have access to the...
 * **Console**: From here we can manage our machines, block lists and alerts among many other features through the platform.
