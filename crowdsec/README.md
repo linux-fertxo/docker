@@ -203,7 +203,7 @@ Only one:
 ```bash
 docker compose up -d       → run Crowdsec in dettached mode (background)
 
-docker logs crowdsec -f    → look at the logs to find any issues (CTRL+c para salir)
+docker logs crowdsec -f    → look at the logs to find any issues (CTRL+c to exit)
 ```
 
 Allow a few moments to let the container start completely, and then run the following command to generate the Token:
