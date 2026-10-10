@@ -6,7 +6,7 @@
 
 <h2> 
   <p align="center" width="100%">
-    A container to add a security layer to the Docker socket</br>
+    A container to add a security layer to the Docker socket<br>
   </p>
 </h2>
 
@@ -54,6 +54,6 @@ docker compose up -d     → start socket-proxy in background
 
 docker logs socket-proxy -f   → examine the log to check if there is any issue (CTRL+c for exit)
 ```
-</br>
+<br>
 
 ## Ready! We now have an extra layer of security on our Docker socket.

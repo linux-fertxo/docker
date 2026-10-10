@@ -1,7 +1,7 @@
 <h1>
   <p align="center" width="100%">
     <img width="30%" src="../.recursos/img/logos/jdownloader.png">
-    </br>
+    <br>
     jDownloader
   </p> 
 </h1>

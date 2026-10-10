@@ -1,7 +1,7 @@
 <h1>
   <p align="center" width="100%">
 	<img width="44%" src="../.recursos/img/logos/nextcloud.png">
-	</br>
+	<br>
 	  Nextcloud
   </p> 
 </h1>
@@ -104,7 +104,7 @@ docker compose up -d        → start Nextcloud in the background
 
 docker logs nextcloud -f    → examine the logs to see if there are any problems (CTRL+c to exit)
 ```
-</br>
+<br>
 
 In a browser, go to the address you have configured (`https://nextcloud.example.com`)
 
@@ -115,11 +115,11 @@ The configuration wizard will be displayed, so:
 3. (Optional) Install the recommended applications now.
 4. Click on Storage and database.
 
-</br>
+<br>
   <p align="center" width="100%">
 	<img width="33%" src="../.recursos/img/nextcloud/nextcloud_wizard_01.png">
   </p>
-</br></br>
+<br><br>
 
 1. Here we select the database we will use. In this case, **MariaDB**
 2. User: **`nextcloud`**
@@ -130,14 +130,14 @@ The configuration wizard will be displayed, so:
   <p align="center" width="100%">
 	<img width="33%" src="../.recursos/img/nextcloud/nextcloud_wizard_02.png">
   </p>
-</br></br>
+<br><br>
 
 Log in with the credentials:
 
   <p align="center" width="100%">
 	<img width="33%" src="../.recursos/img/nextcloud/nextcloud_login.png">
   </p>
-</br>
+<br>
 <h3>
 Done! Now we have a self-hosted personal cloud with access to dozens of applications.
 </h3>

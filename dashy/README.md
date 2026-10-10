@@ -1,7 +1,7 @@
 <h1>
   <p align="center" width="100%">
     <img width="30%" src="../.recursos/img/logos/dashy.png">
-    </br>
+    <br>
     Dashy
   </p> 
 </h1>
@@ -194,7 +194,7 @@ Open your browser and navigate to the address and port that we've configured pre
   </p>
 
 
-</br>
+<br>
 
 This is what we've been looking for. Once the app is up and running, we can start using it.
 
@@ -208,7 +208,7 @@ This is what we've been looking for. Once the app is up and running, we can star
     <figcaption align="center"><i>Light themes also included (much to my regret) </i>😜</figcaption>
   </p>
 
-</br>
+<br>
 
 Here's a screenshot of my own dashboard
 
@@ -217,7 +217,7 @@ Here's a screenshot of my own dashboard
     <figcaption align="center"><i>Note some custom icons and status checks</i></figcaption>
   </p>
 
-</br>
+<br>
 <h3>
 Done! Now we have a brand new dashboard ready to be the envy of our friends!
 </h3>

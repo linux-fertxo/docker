@@ -1,7 +1,7 @@
 <h1>
   <p align="center" width="100%">
     <img width="30%" src="../.recursos/img/logos/dashy.png">
-    </br>
+    <br>
     Dashy
   </p> 
 </h1>
@@ -193,7 +193,7 @@ Abre el navegador y accede a la dirección del servidor junto al puerto que hemo
     <figcaption align="center"><i>Pantalla de arranque de Dashy</i></figcaption>
   </p>
 
-</br>
+<br>
 
 Esto es lo que hemos estado buscando. Una vez que la aplicación esté en funcionamiento, podemos comenzar a personalizarla.
 
@@ -207,7 +207,7 @@ Esto es lo que hemos estado buscando. Una vez que la aplicación esté en funcio
     <figcaption align="center"><i>También se incluyen temas luminosos (muy a mi pesar)</i> 😜</figcaption>
   </p>
 
-</br>
+<br>
 
 Y aquí tenéis una captura de mi propio tablero:
 
@@ -216,7 +216,7 @@ Y aquí tenéis una captura de mi propio tablero:
     <figcaption align="center"><i>Se pueden ver algunos iconos personalizados e indicadores de estado</i></figcaption>
   </p>
 
-</br>
+<br>
 <h3>
 ¡Listo! ¡Ahora tenemos un flamante dashboard con el que dar envidia a nuestros colegas!
 </h3>

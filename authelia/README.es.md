@@ -1,7 +1,7 @@
 <h1>
   <p align="center" width="100%">
     <img width="30%" src="../.recursos/img/logos/authelia.png">
-    </br>
+    <br>
       Authelia
   </p>
 </h1>
@@ -106,7 +106,7 @@ users:
   # usuario2:
     # etc...  
 ```
-</br>
+<br>
 
 Efectivamente, **la contraseña está vacía**. Para generar una acorde al algoritmo que hemos especificado en el archivo `configuration.yml`, podemos utilizar el comando `authelia crypto hash`. 
 
@@ -155,98 +155,98 @@ docker logs authelia -f   → examinamos los registros para ver si hay algún pr
 
 Tras revisar en el log que todo va bien, iremos a la dirección que hayamos configurado en `docker-compose.yml` (la línea auth.$DOMAINNAME) y seguiremos los siguientes pasos:
 
-</br>
+<br>
 
   <p align="center" width="100%">
     <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_01.png">
-    </br>Introducimos nuestras credenciales
+    <br>Introducimos nuestras credenciales
   </p>
 
-</br>
+<br>
 
   <p align="center" width="100%">
     <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_02.png">
-    </br>Pinchamos en Registar Dispositivo
+    <br>Pinchamos en Registar Dispositivo
   </p>
 
-</br>
+<br>
 
   <p align="center" width="100%">
     <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_03.png">
-    </br>Primero registraremos una contraseña de un solo uso
+    <br>Primero registraremos una contraseña de un solo uso
   </p>
 
-</br>
+<br>
 
   <p align="center" width="100%">
     <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_04.png">
-    </br>Nos advierte que nos llegará un correo... que no llegará porque no tenemos un servidor de correo configurado. Acudimos al archivo `notification.txt` de la carpeta `config/`
+    <br>Nos advierte que nos llegará un correo... que no llegará porque no tenemos un servidor de correo configurado. Acudimos al archivo `notification.txt` de la carpeta `config/`
   </p>
 
-</br>
+<br>
 
   <p align="center" width="100%">
     <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_05.png">
-    </br>Copiamos el código aleatorio y lo introducimos en el diálogo anterior
+    <br>Copiamos el código aleatorio y lo introducimos en el diálogo anterior
   </p>
 
-</br>
+<br>
 
   <p align="center" width="100%">
     <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_06.png">
-    </br>Pulsamos en SIGUIENTE
+    <br>Pulsamos en SIGUIENTE
   </p>
 
-</br>
+<br>
 
   <p align="center" width="100%">
     <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_07.png">
-    </br>Escaneamos el código QR con nuestra aplicación favorita. En mi caso es <a href="https://play.google.com/store/apps/details?id=com.authy.authy&hl=es&pli=1">Authy para Android</a>
+    <br>Escaneamos el código QR con nuestra aplicación favorita. En mi caso es <a href="https://play.google.com/store/apps/details?id=com.authy.authy&hl=es&pli=1">Authy para Android</a>
   </p>
 
-</br>
+<br>
 
   <p align="center" width="100%">
     <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_08.png">
-    </br>Introducimos el código generado
+    <br>Introducimos el código generado
   </p>
 
-</br>
+<br>
 
   <p align="center" width="100%">
     <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_09.png">
-    </br>Ya tenemos configurado un segundo factor, ahora vamos a probar con un dispositivo físico pulsando AÑADIR en Credenciales WebAuthn
+    <br>Ya tenemos configurado un segundo factor, ahora vamos a probar con un dispositivo físico pulsando AÑADIR en Credenciales WebAuthn
   </p>
 
-</br>
+<br>
 
   <p align="center" width="100%">
     <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_10.png">
-    </br>En éste caso daremos de alta una Yubikey 5C
+    <br>En éste caso daremos de alta una Yubikey 5C
   </p>
 
-</br>
+<br>
 
   <p align="center" width="100%">
     <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_11.png">
-    </br>Introducimos nuestro PIN
+    <br>Introducimos nuestro PIN
   </p>
 
-</br>
+<br>
 
   <p align="center" width="100%">
     <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_12.png">
-    </br>Tocamos el botón físico de la Yubikey
+    <br>Tocamos el botón físico de la Yubikey
   </p>
 
-</br>
+<br>
 
   <p align="center" width="100%">
     <img width="33%" src="../.recursos/img/authelia/authelia_screenshot_13.png">
-    </br>Y por último podremos elegir el método que se nos presentará por defecto. Siempre podremos decir cual en el momento en que nos lo solicite, esto es tan solo una preferencia.
+    <br>Y por último podremos elegir el método que se nos presentará por defecto. Siempre podremos decir cual en el momento en que nos lo solicite, esto es tan solo una preferencia.
   </p>
 
-</br>
+<br>
 
 <h3>
 ¡Listo! Ya podemos acceder a nuestras aplicaciones con autenticación de doble factor.

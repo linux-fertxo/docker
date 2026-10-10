@@ -38,7 +38,7 @@ services:
     volumes:
       - $DOCKERDIR/crowdsec/data:/var/lib/crowdsec/data
       - $DOCKERDIR/crowdsec/etc:/etc/crowdsec
-      
+
       #  NOTA:  acquis.yaml está **OBSOLETO**
       #         Ahora se usa la carpeta acquis.d/
       #           - Cada archivo dentro de acquis.d/ será analizado y parseado por separado y en paralelo

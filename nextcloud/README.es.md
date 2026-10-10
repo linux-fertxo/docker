@@ -1,7 +1,7 @@
 <h1>
   <p align="center" width="100%">
     <img width="44%" src="../.recursos/img/logos/nextcloud.png">
-    </br>
+    <br>
     Nextcloud
   </p> 
 </h1>
@@ -104,7 +104,7 @@ docker compose up -d       → arrancamos Nextcloud en segundo plano
 
 docker logs nextcloud -f   → examinamos los registros para ver si hay algún problema (CTRL+c para salir)
 ```
-</br>
+<br>
 
 En un navegador vamos a la dirección que hayamos configurado (`https://nextcloud.ejemplo.com`)
 
@@ -115,11 +115,11 @@ Se mostrará el asistente de configuración inicial. Para ello:
   3. (Opcional) Instalar las aplicaciones recomendadas ahora.
   4. Hacer clik en Almacenamiento y base de datos.
 
-</br>
+<br>
   <p align="center" width="100%">
     <img width="33%" src="../.recursos/img/nextcloud/nextcloud_wizard_01.png">
   </p>
-</br></br>
+<br><br>
 
   5. Seleccionar la base de datos que queramos utilizar. En este caso, **MariaDB**
   6. Usuario: **`nextcloud`**
@@ -130,7 +130,7 @@ Se mostrará el asistente de configuración inicial. Para ello:
   <p align="center" width="100%">
     <img width="33%" src="../.recursos/img/nextcloud/nextcloud_wizard_02.png">
   </p>
-</br></br>
+<br><br>
 
 Accedemos con las credenciales:
 

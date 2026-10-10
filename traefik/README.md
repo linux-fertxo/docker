@@ -1,7 +1,7 @@
 <h1>
   <p align="center" width="100%">
 	<img width="22%" src="../.recursos/img/logos/traefik.png">
-	</br>
+	<br>
 	Træfik v3
   </p> 
 </h1>
@@ -159,7 +159,7 @@ docker compose up -d
 # examine the logs to see if there are any problems (CTRL+c to exit)
 docker logs traefik -f
 ```
-</br>
+<br>
 
 The process of obtaining a certificate takes some time. After a few minutes, check the contents of `acme/acme.json` to see if we've obtained the test certificate. If so, revert lines 80 and 81 on `traefik.yml` file (comment out 80 and uncomment 81) and finally reset the acme/acme.json file with the following command:
 
@@ -176,7 +176,7 @@ Finally we start Traefik again:
 docker compose up -d --force-recreate
 ```
 
-</br>
+<br>
 
 <h3>
 	Ready! Now we can reach our services in our own domain with SSL certificates.

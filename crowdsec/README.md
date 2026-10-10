@@ -1,7 +1,7 @@
 <h1>
   <p align="center" width="100%">
     <img width="33%" src="../.recursos/img/logos/crowdsec.png">
-    </br>
+    <br>
     Crowdsec
   </p> 
 </h1>
@@ -47,7 +47,7 @@ Crowdsec is a system that detects and blocks unwanted access attempts at various
 ## Description
 
 ### *How does Crowdsec work?*
-</br>
+<br>
 <figure>
   <p align="center" width="100%">
     <img width="75%" src="../.recursos/img/crowdsec/simplified_SE_overview.svg"/>

@@ -1,7 +1,7 @@
 <h1>
   <p align="center" width="100%">
     <img width="50%" src="../.recursos/img/logos/cloudflare.png">
-    </br></br>
+    <br><br>
     Cloudflare DDNS
   </p> 
 </h1>

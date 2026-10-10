@@ -1,13 +1,16 @@
 <h1>
     <p align="center" width="100%">
         <img width="50%" src=".recursos/img/logos/linuxfertxo.png">
-        </br>
+        <br>
         Mis servicios Docker para Homelab
-        <h2><p align="center">
-            Una selección comentada de contenedores que espero sirva de inspiración para vuestros proyectos
-        </h2>
     </p>
 </h1>
+
+<h2>
+    <p align="center" width="100%">
+        Una selección comentada de contenedores que espero sirva de inspiración para vuestros proyectos
+    </p>
+</h2>
 
 [![Static Badge](https://img.shields.io/badge/lang-%F0%9F%87%AC%F0%9F%87%A7_en-blue?style=plastic)](README.md)
 

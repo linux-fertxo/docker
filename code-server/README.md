@@ -1,7 +1,7 @@
 <h1>
   <p align="center" width="100%">
     <img width="30%" src="../.recursos/img/logos/vscode.png">
-    </br></br>
+    <br><br>
     VS Code Server
   </p> 
 </h1>

@@ -54,7 +54,7 @@ docker compose up -d          → arrancamos socket-proxy en segundo plano
 
 docker logs socket-proxy -f   → examinamos los registros para ver si hay algún problema (CTRL+c para salir)
 ```
-</br>
+<br>
 
 <h3>
 ¡Listo! Ya tenemos una capa de seguridad extra en nuestro socket de Docker.

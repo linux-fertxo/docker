@@ -1,14 +1,14 @@
 <h1>
   <p align="center" width="100%">
     <img width="63%" src="../.recursos/img/logos/proxdash.png">
-    </br>
+    <br>
     Proxmox Dashboard
   </p> 
 </h1>
 
 <h2> 
   <p align="center" width="100%">
-    A dashboard for Proxmox VE based on <a href="https://www.smarthomebeginner.com/proxmox-grafana-dashboard/">Anand's from Smart Home Beginner</a>, and tweaked by myself.</br>
+    A dashboard for Proxmox VE based on <a href="https://www.smarthomebeginner.com/proxmox-grafana-dashboard/">Anand's from Smart Home Beginner</a>, and tweaked by myself.<br>
 	Relies on InfluxDB and Grafana
   </p>
 </h2>
@@ -79,7 +79,7 @@ docker compose up -d        # start the stack in the background
 docker logs prox-influxdb   # examine the InfluxDB logs to see if there are any problems (CTRL+c to exit)
 docker logs prox-grafana    # same as above but for Grafana
 ```
-</br>
+<br>
 
 ### *InfluxDB configuration*
 

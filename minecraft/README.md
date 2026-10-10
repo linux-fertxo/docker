@@ -1,7 +1,7 @@
 <h1>
   <p align="center" width="100%">
     <img width="80%" src="../.recursos/img/logos/minecraft.png">
-    </br>
+    <br>
     Minecraft Bedrock Server
   </p> 
 </h1>

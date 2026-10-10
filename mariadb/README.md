@@ -1,7 +1,7 @@
 <h1>
   <p align="center" width="100%">
     <img width="30%" src="../.recursos/img/logos/mariadb.png">
-    </br>
+    <br>
     MariaDB
   </p> 
 </h1>

@@ -1,16 +1,22 @@
 <h1>
     <p align="center" width="100%">
         <img width="60%" src=".recursos/img/logos/linuxfertxo.png">
-        </br>
+        <br>
         My Docker services for Homelabbing
-        <h2><p align="center">
-            A commented⁽¹⁾ selection of stacks that I hope will inspire your projects
-        </h2>
-        <h5>
-            ⁽¹⁾ Note: All README have english translation, but comments inside individual files are only in Spanish at the moment.
-        </h5>
-    </p> 
+    </p>
 </h1>
+
+<h2>
+    <p align="center" width="100%">
+        A commented⁽¹⁾ selection of stacks that I hope will inspire your projects
+    </p>
+</h2>
+
+<h5>
+    <p align="center" width="100%">
+        ⁽¹⁾ Note: All README have english translation, but comments inside individual files are only in Spanish at the moment.
+    </p>
+</h5>
 
 <!-- [![Static Badge](https://img.shields.io/badge/lang-%F0%9F%87%AA%F0%9F%87%B8_es-blue?style=plastic)](README.es.md) -->
 
