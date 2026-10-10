@@ -1,13 +1,18 @@
-# Configuracion de yamllint para los docker-compose.yml de este repo didactico.
-# El estilo de comentarios es intencionadamente largo e indentado (notas), por eso
-# se relajan las reglas puramente de formato; el resto se valida igual.
 ---
+# Configuracion de yamllint para este repo didactico.
+# Se relajan SOLO las reglas de estilo que chocan con la anotacion del autor
+# (lineas largas, separadores de comentarios, notas indentadas...).
+# El resto (espacios finales, sangrias, saltos de linea, brackets...) se valida.
 extends: default
 
 rules:
   line-length: disable
   document-start: disable
   comments-indentation: disable
+  comments:
+    require-starting-space: false
+  truthy:
+    check-keys: false
   empty-lines:
     max: 2
     max-start: 0

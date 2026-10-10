@@ -23,8 +23,8 @@ entryPoints:
         certResolver: dns-cloudflare                                        # Nombre del bloque que buscará después certificatesResolvers.
         domains:
           - main: ejemplo.com                                               # Ajustar el dominio.
-          - sans: 
-            - "*.ejemplo.com"                                               # Ajustar el dominio.
+          - sans:
+              - "*.ejemplo.com"                                               # Ajustar el dominio.
     forwardedHeaders:
       trustedIPs:
         # BLOQUE DE IPs DE CLOUDFLARE (Si usamos Cloudflare)                [IPs de Cloudflare: https://www.cloudflare.com/ips/]
@@ -52,7 +52,7 @@ entryPoints:
 serversTransport:
   insecureSkipVerify: true                                                  # Deshabilita la verificación del certificado entre Traefik y el servidor interno. Necesario para ciertos servicios.
 
-log: 
+log:
   filePath: /var/log/traefik.log
   level: WARN                                                               # (Por defecto: ERROR) DEBUG, INFO, WARN, ERROR, FATAL, PANIC (de menor a mayor importancia)
   format: json
@@ -62,15 +62,15 @@ accessLog:
   format: json
   bufferingSize: 100                                                        # Por defecto 100, se puede reducir por ejemplo para pasar a Crowdsec los datos más rápido. (Ver crowdsec)
   filters:
-    statusCodes: 
+    statusCodes:
       - "100-800"
 
 providers:
   docker:
-     endpoint: "tcp://socket-proxy:2375"                                    # Aquí apuntamos al socket creado por socket-proxy para mayor seguridad (ver socket-proxy).
+    endpoint: "tcp://socket-proxy:2375"                                    # Aquí apuntamos al socket creado por socket-proxy para mayor seguridad (ver socket-proxy).
     #  endpoint: "unix:///var/run/docker.sock"                                # Descomentar aquí y comentar la anterior para revertir el proxy de socket.
-     exposedByDefault: false
-     network: proxy
+    exposedByDefault: false
+    network: proxy
   file:
     directory: /etc/traefik/rules                                           # Carga la configuración dinámica desde uno o más archivos toml o yaml de este directorio.
     watch: true                                                             # Sólo funciona en los archivos de la carpeta, no es recursivo. Cada vez que soltemos un archivo dentro de la carpeta, Traefik lo tendrá en cuenta para la configuración.

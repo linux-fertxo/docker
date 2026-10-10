@@ -16,7 +16,7 @@ http:
     webmin-websecure-rtr:                    # Acceso a Webmin (Administración de servidores via web).
       entryPoints:
         - "websecure"
-      rule: "Host(`webmin.ejemplo.com`)"  
+      rule: "Host(`webmin.ejemplo.com`)"
       middlewares:
         - chain-authelia                     # Pasamos una cadena para proporcionar autentificación Authelia.
       tls: {}

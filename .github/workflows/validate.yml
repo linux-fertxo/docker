@@ -2,7 +2,7 @@ name: Validate compose
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
 
 jobs:
@@ -13,8 +13,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install yamllint
         run: python -m pip install --quiet yamllint
-      - name: Lint compose files
-        run: yamllint -c .yamllint */docker-compose.yml
+      - name: Lint all YAML
+        run: yamllint -c .yamllint .
 
   compose-config:
     name: docker compose config (${{ matrix.stack }})
