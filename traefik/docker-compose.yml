@@ -1,50 +1,92 @@
-#============================================================================= REDES
+#  SECCION: REDES
 networks:
-  proxy:                                                                      # Nombre de la red en la que expondremos los servicios exteriormente
+  proxy:
     name: proxy
-    external: true                                                            # Podemos definirla manualmente o junto con el servicio (descomentar para ello).
-    #------------------------------------------------------------------------- Ignorar este bloque hasta ver Crowdsec 
+    driver: bridge
+    external: true
+
+    #  NOTA:  Ignorar el siguiente bloque hasta ver la parte de Crowdsec
     # ipam:
-    #   driver: default
     #   config:
-    #     - subnet: "10.0.0.0/24"                                               # Ajustar el rango
-  socket_proxy:                                                               # Red del socket-proxy (ver aparte).
+    #     - subnet: "172.20.0.0/24" # Ajustar el rango
+    #     - gateway: "172.20.0.1"
+
+  #  NOTA:  socket_proxy
+  #         ver apartado de socket-proxy (visto anteriormente)
+  #         -  comentar el bloque si no se va a usar
+  socket_proxy:
     name: socket_proxy
     external: true
 
-#============================================================================ SERVICIOS
+
+#  SECCION: SERVICIOS
 services:
-#---------------------------------------------------------------------------- Traefik 3 - Proxy inverso
+
+  #  SERVICIO: Traefik 3 - Proxy inverso
+
+  #  NOTA:  traefik.image:
+  #         Es más fiable fijar una versión concreta de imagen que usar latest
   traefik:
-    image: traefik:3.2.1                                                      # Es más fiable fijar una versión en concreto que usar la etiqueta latest.
+    image: traefik:3.7.14
     container_name: traefik
     security_opt:
       - no-new-privileges:true
     restart: always
+
+    #  NOTA:  networks.proxy.ipv4_address:
+    #         Fijamos la IP para usarla como TRUSTED PROXY (p.ej. en Nextcloud)
+    #           - Requiere que la red 'proxy' tenga definida la subred (ver REDES)
+    #           - Si preferimos IP dinámica, comentar la línea de ipv4_address
     networks:
-      socket_proxy: {}
-      proxy: {}                                                               # Si usamos Crowdsec, poner un # delante de {}
-        # ipv4_address: "10.0.0.10"                                             # Si usamos Crowdsec es interesante fijar la IP (ver Crowdsec). Ajustar la IP dentro del rango definido arriba.
+      proxy:
+        ipv4_address: "172.20.0.100"
+      socket_proxy:
+
     ports:
       - 80:80
       - 443:443
-      # - 8083:8080                                                             # Acceso al tablero desde la red interna. Necesita descomentar api.insecure=true en traefik.yml
+
+    #  NOTA:  environment:
+    #         Para $TZ consultar listado de zonas: https://www.joda.org/joda-time/timezones.html
+    #         CF_DNS_API_TOKEN: Variable de entorno que apunta al token de Cloudflare que
+    #         deberemos crear previamente.
     environment:
-      - TZ=$TZ                                                                # Listado de zonas: https://www.joda.org/joda-time/timezones.html
-      - CF_DNS_API_TOKEN=$CF_DNS_API_TOKEN                                    # Variable de entorno que apunta al token de Cloudflare que deberemos crear.
-    volumes:                                                                  # $DOCKERDIR es la variable de entorno con la ruta hasta las configuraciones de Docker.
-      - $DOCKERDIR/traefik/traefik.yml:/etc/traefik/traefik.yml:ro            # Configuración estática de Traefik
-      - $DOCKERDIR/traefik/rules:/etc/traefik/rules                           # Carpeta con la configuración dinámica de Traefik (middlewares, tls, aplicaciones externas...)
-      # - /var/run/docker.sock:/var/run/docker.sock:ro                          # Comentado para no exponer el socket real. Si se va a usar, descomentar también en traefik.yml
-      ## IMPORTANTE: Los siguientes archivos hay que crearlos a mano (touch). En el caso de acme además tiene que tener permisos 600.
-      - $DOCKERDIR/traefik/acme/acme.json:/etc/traefik/acme.json              # Este es el certificado creado por Cloudflare (o Let's Encrypt, da igual. Todos van a éste archivo) Para crear un nuevo certificado hay que borrar el archivo previamente para que genere uno nuevo
+      - TZ=$TZ
+      - CF_DNS_API_TOKEN=$CF_DNS_API_TOKEN
+
+    #  NOTA:  volumes:
+    #         $DOCKERDIR es la variable de entorno con la ruta hasta las configuraciones de Docker.
+    #         traefik.yml es la configuración estática de Traefik
+    #         La carpeta rules/ contiene la configuración dinámica (middlewares, aplicaciones...)
+    #         /var/run/docker.sock está comentado para no exponer el socket real (ver socket-proxy)
+    #           - Si se va a usar, descomentar también en traefik.yml
+    volumes:
+      - $DOCKERDIR/traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - $DOCKERDIR/traefik/rules:/etc/traefik/rules
+      # - /var/run/docker.sock:/var/run/docker.sock:ro
+
+      #  OJO:  Los siguientes archivos hay que crearlos a mano (touch)
+      #        acme.json es el certificado creado por Cloudflare.
+      #          - Para crear un nuevo certificado hay que re-crear el archivo previamente
+      #          - mediante ':> acme.json' creamos un archivo nuevo vacío
+      #          - además tiene que tener permisos 600, si no Traefik no arranca
+      - $DOCKERDIR/traefik/acme/acme.json:/etc/traefik/acme.json
       - $DOCKERDIR/traefik/logs/traefik.log:/var/log/traefik.log
       - $DOCKERDIR/traefik/logs/access.log:/var/log/access.log
-      # - $DOCKERDIR/crowdsec/cs-private-key:/etc/traefik/cs-private-key        # Ignorar esta línea hasta ver la parte de Crowdsec
       - /etc/localtime:/etc/localtime:ro
+
+      #  NOTA:  Ignorar la siguiente línea hasta ver la parte de Crowdsec
+      # - $DOCKERDIR/crowdsec/cs-private-key:/etc/traefik/cs-private-key
+
+    #  NOTA:  labels:
+    #         Para acceder externamente es necesario crear una entrada en el registro DNS (NO RECOMENDADO)
+    #         chain-authelia@file es una cadena definida en el archivo middlewares-chains.yml de rules/
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik-rtr.entrypoints=websecure"
-      - "traefik.http.routers.traefik-rtr.rule=Host(`traefik.$DOMAINNAME`)"   # Para acceder desde fuera es necesario crear una entrada en el registro DNS (Cloudflare en éste caso).
-      - "traefik.http.routers.traefik-rtr.service=api@internal"               # Acceso al API interno de Traefik.
-      - "traefik.http.routers.traefik-rtr.middlewares=chain-authelia@file"    # "chain-authelia" es una cadena definida en el "@file" middlewares-chains.yml del directorio rules.
+      - "traefik.http.routers.traefik-rtr.rule=Host(`traefik.$DOMAINNAME`)"
+      - "traefik.http.routers.traefik-rtr.service=api@internal"
+      - "traefik.http.routers.traefik-rtr.middlewares=chain-authelia@file"
+
+      #  NOTA: Ignorar la siguiente línea hasta ver la parte de Watchtower
+      # - com.centurylinklabs.watchtower.enable=true

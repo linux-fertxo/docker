@@ -1,11 +1,17 @@
-#=========================================== REDES
+#  SECCION: REDES
 networks:
   socket_proxy:
     name: socket_proxy
 
-#=========================================== SERVICIOS
+
+#  SECCION: SERVICIOS
 services:
-#------------------------------------------- Socket Proxy
+
+  #  SERVICIO: Socket Proxy - Proxy de solo lectura para el socket de Docker
+
+  #  NOTA:  socket-proxy:
+  #         Expone una API filtrada del socket de Docker (ghcr.io/tecnativa/docker-socket-proxy).
+  #         privileged es necesario para poder acceder al socket real.
   socket-proxy:
     container_name: socket-proxy
     hostname: socket-proxy
@@ -13,31 +19,41 @@ services:
     restart: always
     networks:
       - socket_proxy
-    privileged: true                         # Necesario
+    privileged: true
+
+    #  NOTA:  ports:
+    #         Este puerto debe exponerse únicamente a la red interna (127.0.0.1).
+    #           - Para manejar múltiples endpoints de docker en una red local: - "2375:2375"
     ports:
-      - 127.0.0.1:2375:2375                  # Este puerto debe ser únicamente expuesto a la red interna
-    ## Se puede usar esta otra línea, por ejemplo para manejar múltiples endpoints de docker dentro de una red local
-#      - "2375:2375"
+      - 127.0.0.1:2375:2375
+
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - $DOCKERDIR/socket-proxy/haproxy.cfg.template:/usr/local/etc/haproxy/haproxy.cfg.template
+
+    #  NOTA:  environment:
+    #         Los nombres de las variables coinciden con el path de la URL
+    #           - P.Ej.: AUTH bloquea el acceso a todo /auth/* como partes del API, etc.
+    #           - Usamos 0 para prohibir el acceso, 1 para autorizarlo.
+    #         LOG_LEVEL: de menor a mayor importancia:
+    #           - debug, info, notice, warning, err, crit, alert, emerg
     environment:
       - DISABLE_IPV6=1
-      - LOG_LEVEL=info                       # debug,info,notice,warning,err,crit,alert,emerg (de menor a mayor importancia)
+      - LOG_LEVEL=info
 
-      # Las variables coinciden con el path de la URL (p.e. AUTH bloquea acceso a todo /auth/* como partes del API, etc)
-      # 0 para prohibir acceso
-      # 1 para autorizarlo
-      #====================================== Autorizados por defecto
+      #  INFO:  Autorizados por defecto
       - EVENTS=1
       - PING=1
       - VERSION=1
-      #====================================== Prohibidos por defecto
-      #-------------------- Seguridad crítica
+
+      #  INFO:  Prohibidos por defecto
+
+      #  SUB:   Seguridad crítica
       - AUTH=0
       - SECRETS=0
       - POST=0
-      #--------- Necesarios dependiendo el servicio
+
+      #  SUB:   Necesarios según el servicio
       - BUILD=0
       - COMMIT=0
       - CONFIGS=0

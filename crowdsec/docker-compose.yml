@@ -1,13 +1,16 @@
-#=============================================================================== REDES
+#  SECCION: REDES
+
+#  NOTA:  networks.proxy:
+#         Red externa creada previamente (la define el stack de traefik)
 networks:
   proxy:
     name: proxy
-    external: true                                                              # Creada previamente
+    external: true
 
-#=============================================================================== SERVICIOS
+#  SECCION: SERVICIOS
 services:
 
-  #----------------------------------------------------------------------------- Crowdsec
+  #  SERVICIO: CrowdSec - IDS/IPS (detección y bloqueo de intrusiones)
   crowdsec:
     image: crowdsecurity/crowdsec:latest
     container_name: crowdsec
@@ -15,19 +18,36 @@ services:
     restart: unless-stopped
     networks:
       - proxy
+
+    #  NOTA:  ports:
+    #         Puerto LAPI para los "rebotadores"
     ports:
-      - 8080:8080                                                               # Puerto LAPI para los "rebotadores"
+      - 8080:8080
+
+    #  NOTA:  environment:
+    #         GID: pasamos el grupo del usuario al contenedor.
+    #         COLLECTIONS: añadir las colecciones pertinentes si usamos
+    #         los registros comentados más abajo.
     environment:
-      - GID=${GID-1000}                                                           # Pasamos el grupo del usuario al contenedor
-      - COLLECTIONS='crowdsecurity/traefik crowdsecurity/http-cve crowdsecurity/linux crowdsecurity/base-http-scenarios' # Añadir las colecciones pertinentes si usamos los registros comentados abajo
+      - GID=${GID-1000}
+      - COLLECTIONS='crowdsecurity/traefik crowdsecurity/http-cve crowdsecurity/linux crowdsecurity/base-http-scenarios'
+
+    #  NOTA:  volumes:
+    #         Datos del contenedor + adquisición de logs.
+    #           - No es necesario un bind-mount para los datos, podemos crear un volumen gestionado.
     volumes:
-    #----------------------------------------------------- Datos del contenedor
-      - $DOCKERDIR/crowdsec/data:/var/lib/crowdsec/data                         # No es necesario un bind-mount, podemos crear un contenedor
+      - $DOCKERDIR/crowdsec/data:/var/lib/crowdsec/data
       - $DOCKERDIR/crowdsec/etc:/etc/crowdsec
-      # - $DOCKERDIR/crowdsec/acquis.yaml:/etc/crowdsec/acquis.yaml               # **OBSOLETO** Adquisición de archivos log
-      - $DOCKERDIR/crowdsec/acquis.d:/etc/crowdsec/acquis.d                     # Adquisición de archivos log
-    #------------------------------------------ Registros de otros contenedores
-      - $DOCKERDIR/traefik/logs/access.log:/var/log/traefik.log:ro              # Registros de acceso de Traefik
-      # - $DOCKERDIR/nextcloud/data/nextcloud.log:/var/log/nextcloud.log:ro       # Registros de Nextcloud
-      # - $DOCKERDIR/nextcloud/config/log/nginx/access.log:/var/log/nginx.log:ro  # Registros del servidor web de Nextcloud
-      # - $DOCKERDIR/authelia/config/authelia.log:/var/log/authelia.log:ro        # Registros de Authelia
+      
+      #  NOTA:  acquis.yaml está **OBSOLETO**
+      #         Ahora se usa la carpeta acquis.d/
+      #           - Cada archivo dentro de acquis.d/ será analizado y parseado por separado y en paralelo
+      # - $DOCKERDIR/crowdsec/acquis.yaml:/etc/crowdsec/acquis.yaml
+      - $DOCKERDIR/crowdsec/acquis.d:/etc/crowdsec/acquis.d
+
+      #  NOTA:  servicios de otros contenedores bindeados manualmente
+      #         los servicios comentados serán activados posteriormente en sus respectivas secciones
+      - $DOCKERDIR/traefik/logs/access.log:/var/log/traefik.log:ro
+      # - $DOCKERDIR/nextcloud/data/nextcloud.log:/var/log/nextcloud.log:ro
+      # - $DOCKERDIR/nextcloud/config/log/nginx/access.log:/var/log/nginx.log:ro
+      # - $DOCKERDIR/authelia/config/authelia.log:/var/log/authelia.log:ro

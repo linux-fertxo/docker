@@ -1,12 +1,16 @@
-#============================================================================= REDES
+#  SECCION: REDES
 networks:
   dashy:
     name: dashy
 
-#============================================================================= SERVICIOS
+
+#  SECCION: SERVICIOS
 services:
 
-  #--------------------------------------------------------------------------- Traefik 3 - Proxy inverso
+  #  SERVICIO: Dashy - Panel de inicio (dashboard)
+
+  #  NOTA:  dashy.image:
+  #         Es más fiable fijar una versión concreta de imagen que usar la etiqueta latest
   dashy:
     image: lissy93/dashy:latest
     container_name: dashy
@@ -16,20 +20,27 @@ services:
       - dashy
     ports:
       - 4000:8080
+
+    #  NOTA:  environment:
+    #         UID / GID: ID del usuario y grupo que ejecuta el contenedor.
+    #           - Ejecutar `id usuario` en la máquina host para averiguarlos
     environment:
       - NODE_ENV=production
-    #------------------------------------------------------ Especificar ID de usuario y grupo (ejecutar `id usuario` para averigüarlos).
       - UID=$UID
       - GID=$GID
+
+    #  NOTA:  volumes (opcional):
+    #         Sección de certificados, configuración de Dashy y carpetas con assets.
+    #         dashy.yml se crea durante el primer arranque, pero podemos cargar una configuración previa
     # volumes:
-    #------------------------------------------------------ Sección de certificados (opcional).
-      # - $ACME_PATH/ejemplo.cer:/etc/ssl/certs/dashy-pub.pem:ro
-      # - $ACME_PATH/ejemplo.key:/etc/ssl/certs/dashy-priv.key:ro
-    #------------------------------------------------------ Configuración de Dashy y carpetas con assests.
-      # - $DOCKERDIR/dashy/dashy.yml:/app/user-data/conf.yml               # El archivo de configuración, se creará durante el primer arranque (opcional).
-      # - $DOCKERDIR/dashy/icons:/app/public/item-icons/                   # Si queremos usar iconos personalizados (opcional).
-      # - $DOCKERDIR/dashy/fonts:/app/public/fonts/                        # Si queremos usar fuentes personalizadas (opcional).
-    #------------------------------------------------------ Configuración del chequeo de salud (opcional).
+    #   - $ACME_PATH/ejemplo.cer:/etc/ssl/certs/dashy-pub.pem:ro
+    #   - $ACME_PATH/ejemplo.key:/etc/ssl/certs/dashy-priv.key:ro
+    #   - $DOCKERDIR/dashy/dashy.yml:/app/user-data/conf.yml
+    #   - $DOCKERDIR/dashy/icons:/app/public/item-icons/
+    #   - $DOCKERDIR/dashy/fonts:/app/public/fonts/
+
+    #  NOTA:  healthcheck (opcional):
+    #         Configuración del chequeo de salud de Dashy
     healthcheck:
       test: ['CMD-SHELL', 'yarn health-check']
       interval: 5m
