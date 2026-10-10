@@ -34,7 +34,7 @@ services:
   #         Las variables cargadas como secretos se inyectan en el contenedor
   #         mediante las equivalencias *_FILE apuntando a /run/secrets/.
   authelia:
-    image: authelia/authelia:latest
+    image: authelia/authelia:4.39.28
     container_name: authelia
     restart: unless-stopped
     healthcheck:
@@ -81,7 +81,7 @@ services:
   #  SERVICIO: Redis - Almacén de sesiones de Authelia
 
   redis:
-    image: redis:alpine
+    image: redis:8-alpine
     container_name: auth-redis
     restart: unless-stopped
     networks:

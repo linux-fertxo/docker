@@ -22,7 +22,7 @@
       3. Authelia
       4. Nextcloud
       5. Crowdsec
-      5. Otros contenedores con etiquetas para Traefik
+      6. Otros contenedores con etiquetas para Traefik
 
 ### ¿Qué puedo aprender aquí?
 

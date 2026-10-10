@@ -12,7 +12,7 @@ services:
   #  NOTA:  dashy.image:
   #         Es más fiable fijar una versión concreta de imagen que usar la etiqueta latest
   dashy:
-    image: lissy93/dashy:latest
+    image: lissy93/dashy:4.8.0
     container_name: dashy
     hostname: dashy
     restart: unless-stopped

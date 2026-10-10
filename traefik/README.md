@@ -38,7 +38,7 @@
 ## Structure
 
 	traefik/
-	  ├─ docker-compose.yml                   → dockerfile
+	  ├─ docker-compose.yml                   → compose file
 	  ├─ .env                                 → environment variables
 	  ├─ traefik.yml                          → static configuration
 	  ├─ acme/

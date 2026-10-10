@@ -15,7 +15,7 @@ services:
 
   #  SERVICIO: Nextcloud - Nube privada
   nextcloud:
-    image: linuxserver/nextcloud:latest
+    image: linuxserver/nextcloud:version-35.0.1
     container_name: nextcloud
     hostname: nextcloud
     restart: unless-stopped

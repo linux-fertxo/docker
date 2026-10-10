@@ -12,7 +12,7 @@ services:
 
   #  SERVICIO: CrowdSec - IDS/IPS (detección y bloqueo de intrusiones)
   crowdsec:
-    image: crowdsecurity/crowdsec:latest
+    image: crowdsecurity/crowdsec:v1.8.1
     container_name: crowdsec
     hostname: crowdsec
     restart: unless-stopped
